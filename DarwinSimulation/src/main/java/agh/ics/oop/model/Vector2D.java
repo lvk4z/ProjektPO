@@ -29,6 +29,14 @@ public class Vector2D {
         return new Vector2D(-x,-y);
     }
 
+    public boolean precedes(Vector2D other){
+        return x <= other.x && y <= other.y;
+    }
+
+    public boolean follows(Vector2D other){
+        return x >= other.x && y >= other.y;
+    }
+
     @Override
     public String toString() {
         return "(" + x + "," + y + ")";
@@ -37,8 +45,7 @@ public class Vector2D {
     @Override
     public boolean equals(Object other) {
         if (this == other) return true;
-        if (!(other instanceof Vector2D))return false;
-        Vector2D that = (Vector2D) other;
+        if (!(other instanceof Vector2D that))return false;
         return x == that.x && y == that.y;
     }
 
