@@ -1,8 +1,11 @@
 package agh.ics.oop;
 
-import DarwinWorld.GUI.MainApp;
+
+import agh.ics.oop.GUI.MainApp;
 import javafx.application.Application;
 
 public class World {
-    Application.launch(MainApp .class, args);
+    public static void main(String[] args) {
+        Application.launch(MainApp.class, args);
+    }
 }

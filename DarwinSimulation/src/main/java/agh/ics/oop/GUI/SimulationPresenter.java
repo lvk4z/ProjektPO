@@ -1,4 +1,4 @@
-package DarwinWorld.GUI;
+package agh.ics.oop.GUI;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;

@@ -1,4 +1,4 @@
-package DarwinWorld.Stats;
+package agh.ics.oop.Stats;
 
 public class CSVCreator {
 }

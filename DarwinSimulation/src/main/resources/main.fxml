@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            minHeight="750.0" minWidth="850.0"
+            fx:controller="agh.ics.oop.GUI.SimulationPresenter">
+    <top>
+        <VBox>
+            <Label fx:id="configLabel" />
+        </VBox>
+    </top>
+</BorderPane>

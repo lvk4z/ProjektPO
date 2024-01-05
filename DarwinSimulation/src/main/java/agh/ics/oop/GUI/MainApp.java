@@ -1,4 +1,4 @@
-package DarwinWorld.GUI;
+package agh.ics.oop.GUI;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
