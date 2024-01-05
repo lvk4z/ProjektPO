@@ -1,28 +1,33 @@
 package agh.ics.oop.model;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
-import static java.lang.Math.floor;
+public class GravePlantGenerator implements PlantGenerator{
 
-public class GravePlantGenerator extends RandomPositionGenerator{
-    public GravePlantGenerator(int maxWidth, int maxHeight, int count) {
-        super(maxWidth, maxHeight, count);
-        deadBodies = null;
-    }
+    private final Random rand = new Random();
+    private final int width, height;
     private final List<Vector2D> deadBodies;
-
-    protected void addDeadBody(Vector2D deadBody){
-        deadBodies.add(deadBody);
+    public GravePlantGenerator(int width, int height, List<Vector2D> deadBodies) {
+        this.width = width;
+        this.height=height;
+        this.deadBodies = deadBodies;
     }
 
     @Override
-    protected List<Vector2D> generateShuffledPositions() {
-        List<Vector2D> positions = super.generateShuffledPositions();
-        int x = (int) (floor((double) (4 * maxWidth * maxHeight) /deadBodies.size()) - 1);
-        for(Vector2D position : deadBodies){
-            for(int i=0;i<x;i++)positions.add(position);
+    public Vector2D PlantGrass(int count) {
+        float positionType = rand.nextFloat();
+        List<Vector2D> allPositions = new ArrayList<>();
+        for(int i=0;i<height;i++){
+            for(int j=0;j<width;j++)allPositions.add(new Vector2D(j,i));
         }
-        return positions;
+        Collections.shuffle(allPositions,rand);
+        if(deadBodies!=null)Collections.shuffle(deadBodies,rand);
+        if(positionType>=0.2 && deadBodies!=null)return deadBodies.get(0);
+        else return allPositions.get(0);
     }
+
 
 }

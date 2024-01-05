@@ -5,14 +5,15 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import static java.lang.Math.floor;
+import static java.lang.Math.round;
 
 
-public class WorldMap {
+public class WorldMap implements MoveValidator{
     Random rand = new Random();
     private final int height;
     private final int width;
     private final int grassEnergy;
-    private final int dayNumber;
+    private int dayNumber;
     private final int reproductionEnergy;
     private final Map<Vector2D,Plant> plants = new HashMap<>();
     private final Map<Vector2D,List<Animal>> animals = new HashMap<>();
@@ -52,13 +53,20 @@ public class WorldMap {
             List<Animal> animalsAtPosition = animals.get(animal.getPosition());
             animalsAtPosition.remove(animal);
             if (animalsAtPosition.isEmpty()) animals.remove(animal.getPosition());
-            animal.move();
+            animal.move(this);
             this.place(animal);
         }
     }
 
     public WorldElement plantAt(Vector2D position) {
         return plants.get(position);
+    }
+
+    public List<Animal> animalAt(Vector2D position) {
+        if(animals.containsKey(position)) {
+            return animals.get(position);
+        }
+        return null;
     }
 
     public void consumption(Vector2D position){
@@ -75,7 +83,7 @@ public class WorldMap {
 
     public void reproduction(Animal animal1, Animal animal2){
         int parentsEnergy = animal1.getEnergy() + animal2.getEnergy();
-        int animal1Part = (int) floor(((double) animal1.getEnergy() / parentsEnergy) * animal1.getGenes().size());
+        int animal1Part = (int) round(((double) animal1.getEnergy() / parentsEnergy) * animal1.getGenes().size());
         int animal2Part = animal2.getGenes().size() - animal1Part;
         int side = rand.nextInt(2);
         List<Integer> newGenes = new ArrayList<>();
@@ -92,4 +100,39 @@ public class WorldMap {
         place(baby);
     }
 
+    @Override
+    public Vector2D canMoveHorizontally(Vector2D position) {
+        if(position.getX()>=width)return new Vector2D(0,position.getY());
+        if(position.getX()<0)return new Vector2D(width-1,position.getY());
+        else return null;
+    }
+
+    @Override
+    public boolean canMoveVertically(Vector2D position) {
+          if(position.getY()>=height)return false;
+          return !(position.getY()<0);
+    }
+
+    public void nextDay(){dayNumber++;}
+
+    public List<Animal> getAllAnimals() {
+        List<Animal> allAnimals = new ArrayList<>();
+        for (List<Animal> animalList : animals.values()) {
+            allAnimals.addAll(animalList);
+        }
+        return allAnimals;
+    }
+
+    public void removeDeadAnimals(){
+        List<Animal> allAnimals = getAllAnimals();
+        for (Animal animal : allAnimals){
+            if(animal.getEnergy()<=0){
+                List<Animal> animalsAtPosition = animals.get(animal.getPosition());
+                animalsAtPosition.remove(animal);
+                if (animalsAtPosition.isEmpty()) animals.remove(animal.getPosition());
+            }
+        }
+    }
+
+    public int getDay(){return dayNumber;}
 }

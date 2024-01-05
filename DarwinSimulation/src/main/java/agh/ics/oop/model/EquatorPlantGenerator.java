@@ -1,25 +1,45 @@
 package agh.ics.oop.model;
 
-import java.util.List;
+import java.util.*;
 
 import static java.lang.Math.floor;
+import static java.lang.Math.round;
 
-public class EquatorPlantGenerator extends RandomPositionGenerator {
+public class EquatorPlantGenerator implements PlantGenerator {
 
-    public EquatorPlantGenerator(int maxWidth, int maxHeight, int count) {
-        super(maxWidth, maxHeight, count);
+    private final int width, height;
+    private final Random rand = new Random();
+
+    public EquatorPlantGenerator(int width, int height) {
+        this.width = width;
+        this.height = height;
     }
 
     @Override
-    protected List<Vector2D> generateShuffledPositions() {
-        int preferredHeight = (int) floor(0.2*maxWidth);
-        int preferredPositionsNumber = (int) ((((preferredHeight+maxHeight)*0.8 - (maxWidth*maxHeight)))/(preferredHeight*maxHeight))-1;
-        List<Vector2D> positions = super.generateShuffledPositions();
-        for(int k=0;k<preferredPositionsNumber;k++) {
-            for (int i = 0; i < maxWidth; i++) {
-                for (int j = preferredHeight; j < maxHeight - preferredHeight; j++) {
-                    positions.add(new Vector2D(i, j));
-                }
+    public Vector2D PlantGrass(int count) {
+        int preferredHeight = (int) Math.round(0.2 * height);
+        int firstHeight = (int) Math.floor((float) (height - preferredHeight) / 2) + 1;
+
+        List<Vector2D> preferredPosition = populatePositionRange(firstHeight, firstHeight + preferredHeight, width);
+        List<Vector2D> worsePosition = new ArrayList<>(populatePositionRange(0, firstHeight, width));
+        worsePosition.addAll(populatePositionRange(firstHeight + preferredHeight, height, width));
+
+        Collections.shuffle(preferredPosition, rand);
+        Collections.shuffle(worsePosition, rand);
+
+
+        float positionType = rand.nextFloat();
+        if (positionType >= 0.2) return preferredPosition.get(0);
+        else return worsePosition.get(0);
+
+
+    }
+
+    private List<Vector2D> populatePositionRange(int startY, int endY, int width) {
+        List<Vector2D> positions = new ArrayList<>();
+        for (int i = startY; i < endY; i++) {
+            for (int j = 0; j < width; j++) {
+                positions.add(new Vector2D(j, i));
             }
         }
         return positions;
