@@ -31,15 +31,28 @@ public class Animal implements WorldElement {
         this.orientation = getRandomDirection();
     }
 
-    public void move(){
+    public void move(MoveValidator validator){
         int rotation = lifetime % genes.size();
         rotate(genes.get(rotation));
         Vector2D moveVector = orientation.toUnitVector();
-        position=position.add(moveVector);
+        Vector2D horizontalValidator = validator.canMoveHorizontally(position.add(moveVector));
+        boolean verticalValidator = validator.canMoveVertically(position.add(moveVector));
+
+        if(horizontalValidator == null && verticalValidator){
+            position = position.add(moveVector);
+        }else if(horizontalValidator != null && !verticalValidator){
+            orientation = orientation.rotate(4);
+            position = new Vector2D(horizontalValidator.getX(),horizontalValidator.getY()-1);
+        }else if (horizontalValidator != null){
+            position = horizontalValidator;
+        } else {
+            orientation = orientation.rotate(4);
+        }
+
     }
 
     public void eat(WorldElement plant){
-        energy+=plant.getEnergy();
+        energy+=plant.energy();
     }
 
     public boolean isStillAlive(){
@@ -47,14 +60,18 @@ public class Animal implements WorldElement {
     }
 
     @Override
-    public Vector2D getPosition() {
+    public Vector2D position() {
         return position;
     }
 
     @Override
-    public int getEnergy() {
+    public int energy() {
         return energy;
     }
+
+    public void addKid(){kids++;}
+
+    public void addLifeLength(){lifetime++;}
 
     public Direction getOrientation() {return orientation;}
 
@@ -62,8 +79,11 @@ public class Animal implements WorldElement {
 
     public int getLifetime() {return lifetime;}
 
+    public int getKidsNumber() {return kids;}
+
     public void loseEnergy(int lostEnergy) {energy -= lostEnergy;}
     public void rotate(int rotation){
         orientation = orientation.rotate(rotation);
     }
+
 }
