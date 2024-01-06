@@ -1,7 +1,10 @@
 package agh.ics.oop.model;
 
+import javax.xml.validation.Validator;
+import java.time.temporal.ValueRange;
 import java.util.List;
 import java.util.Random;
+import java.util.Vector;
 
 public class Animal implements WorldElement {
 

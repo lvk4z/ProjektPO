@@ -9,39 +9,41 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class AnimalTest {
 
-//    @Test
-//    void move() {
-//        WorldMap map = new WorldMap(6,6,0,0,0);
-//        List<Integer> genes = new ArrayList<>();
-//        genes.add(2);
-//        Vector2D result = new Vector2D(1,0);
-//        Animal animal = new Animal(new Vector2D(0,0),genes,50,Direction.NORTH);
-//        animal.move(map);
-//        assertEquals(animal.getPosition(),result);
-//    }
-//
-//    @Test
-//    void moveOutOfBorder() {
-//        WorldMap map = new WorldMap(6,6,0,0,0);
-//        List<Integer> genes = new ArrayList<>();
-//        genes.add(0);
-//        Vector2D result = new Vector2D(0,0);
-//        Animal animal = new Animal(new Vector2D(5,0),genes,50,Direction.EAST);
-//        animal.move(map);
-//        assertEquals(animal.getPosition(),result);
-//    }
-//
-//    @Test
-//    void moveCrossOfBorder() {
-//        WorldMap map = new WorldMap(6,6,0,0,0);
-//        List<Integer> genes = new ArrayList<>();
-//        genes.add(0);
-//        Vector2D result = new Vector2D(0,5);
-//        Animal animal = new Animal(new Vector2D(5,5),genes,50,Direction.NORTHEAST);
-//        animal.move(map);
-//        assertEquals(animal.getPosition(),result);
-//        assertEquals(animal.getOrientation(),Direction.SOUTHWEST);
-//    }
+
+    @Test
+    void move() {
+        AnimalMap map = new AnimalMap(6,6,0,0);
+        List<Integer> genes = new ArrayList<>();
+        genes.add(2);
+        Vector2D result = new Vector2D(1,0);
+        Animal animal = new Animal(new Vector2D(0,0),genes,50,Direction.NORTH);
+        animal.move(map);
+        assertEquals(animal.position(),result);
+    }
+
+
+    @Test
+    void moveOutOfBorder() {
+        AnimalMap map = new AnimalMap(6,6,0,0);
+        List<Integer> genes = new ArrayList<>();
+        genes.add(0);
+        Vector2D result = new Vector2D(0,0);
+        Animal animal = new Animal(new Vector2D(5,0),genes,50,Direction.EAST);
+        animal.move(map);
+        assertEquals(animal.position(),result);
+    }
+
+    @Test
+    void moveCrossOfBorder() {
+        AnimalMap map = new AnimalMap(6,6,0,0);
+        List<Integer> genes = new ArrayList<>();
+        genes.add(0);
+        Vector2D result = new Vector2D(0,5);
+        Animal animal = new Animal(new Vector2D(5,5),genes,50,Direction.NORTHEAST);
+        animal.move(map);
+        assertEquals(animal.position(),result);
+        assertEquals(animal.getOrientation(),Direction.SOUTHWEST);
+    }
 
     @Test
     void isStillAliveIfAlive() {
