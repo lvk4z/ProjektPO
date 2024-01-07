@@ -24,20 +24,30 @@ public abstract class AbstractPlantMap implements PlantMap{
         List<Vector2D> preferredPosition = getPreferredPositions();
         List<Vector2D> worsePosition = getWorsePositions();
 
+
         Collections.shuffle(preferredPosition, rand);
         Collections.shuffle(worsePosition, rand);
 
         int j = 0,k = 0;
 
         for (int i = 0; i < count; i++) {
+            boolean flag = false;
             float positionType = rand.nextFloat();
             if (positionType >= 0.2) {
-                while(plantAt(preferredPosition.get(j))!=null && j<preferredPosition.size())j++;
-                if(j<preferredPosition.size())plants.put(preferredPosition.get(j),new Plant(preferredPosition.get(j),grassEnergy));
-            }else {
-                while(plantAt(worsePosition.get(k))!=null && k<worsePosition.size())k++;
-                if(k<worsePosition.size())plants.put(worsePosition.get(k),new Plant(worsePosition.get(k),grassEnergy));
+                while(j<preferredPosition.size() && plantAt(preferredPosition.get(j))!=null)j++;
+                if(j<preferredPosition.size()){
+                    plants.put(preferredPosition.get(j),new Plant(preferredPosition.get(j),grassEnergy));
+                    flag = true;
+                }
             }
+            if(!flag){
+                while(k<worsePosition.size() && plantAt(worsePosition.get(k))!=null)k++;
+                if(k<worsePosition.size()){
+                    plants.put(worsePosition.get(k),new Plant(worsePosition.get(k),grassEnergy));
+                    flag = true;
+                }
+            }
+            if(!flag)break;
         }
     }
 
@@ -52,4 +62,5 @@ public abstract class AbstractPlantMap implements PlantMap{
     public boolean isOccupied(Vector2D position) {
         return plants.containsKey(position);
     }
+
 }

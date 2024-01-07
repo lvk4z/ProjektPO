@@ -55,18 +55,21 @@ public class AnimalMap implements MoveValidator {
         return animal.energy() >= energyToReproduce;
     }
 
-    public void reproduction(Vector2D position) {
-        List<Animal> animals = animalAt(position);
-        if (animals.size() > 1) {
-            Animal parent1 = animals.get(0);
-            Animal parent2 = animals.get(1);
-            if (canReproduce(parent1) && canReproduce(parent2)) {
-                List<Integer> newGenes = reproduce(parent1, parent2);
-                parent1.loseEnergy(reproductionEnergy);
-                parent2.loseEnergy(reproductionEnergy);
-                Animal baby = new Animal(position, newGenes, 2 * reproductionEnergy);
-                place(baby);
+    public void reproduction() {
+        List<Vector2D> positions = new ArrayList<>(animals.keySet());
+        for(Vector2D position : positions) {
+            List<Animal> animals = animalAt(position);
+            if (animals.size() > 1) {
+                Animal parent1 = animals.get(0);
+                Animal parent2 = animals.get(1);
+                if (canReproduce(parent1) && canReproduce(parent2)) {
+                    List<Integer> newGenes = reproduce(parent1, parent2);
+                    parent1.loseEnergy(reproductionEnergy);
+                    parent2.loseEnergy(reproductionEnergy);
+                    Animal baby = new Animal(position, newGenes, 2 * reproductionEnergy);
+                    place(baby);
 
+                }
             }
         }
     }
@@ -130,4 +133,9 @@ public class AnimalMap implements MoveValidator {
     public boolean isOccupied(Vector2D position) {
         return animals.containsKey(position);
     }
+
+    public List<Vector2D> getPositions(){
+        return new ArrayList<>(animals.keySet());
+    }
+
 }

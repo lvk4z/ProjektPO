@@ -30,7 +30,6 @@ public class SimulationPresenter implements MapChangeListener {
         AnimalMap animalMap = new AnimalMap(config.getMapHeight(), config.getMapWidth(), config.getEnergyToBreed(), config.getEnergyUsedForReproduction());
         AbstractPlantMap plantMap = new EquatorPlantMap(config.getMapHeight(), config.getMapWidth(), config.getSinglePlantEnergy());
         WorldMap map = new WorldMap(plantMap, animalMap);
-
         Simulation simulation = new Simulation(map, config, this);
         Thread simulationThread = new Thread(simulation);
         simulationThread.start();

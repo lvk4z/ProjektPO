@@ -1,5 +1,9 @@
 package agh.ics.oop.model;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Vector;
+
 public class WorldMap {
     private final PlantMap plantMap;
     private final AnimalMap animalMap;
@@ -21,8 +25,19 @@ public class WorldMap {
         animalMap.place(animal);
     }
 
-    public void reproduction(Vector2D position) {
-        animalMap.reproduction(position);
+    public void reproduction() {
+        animalMap.reproduction();
+    }
+
+    public void eating(){
+        List<Vector2D> positions = animalMap.getPositions();
+        for(Vector2D position : positions){
+            if(plantMap.plantAt(position)!=null){
+                Animal animal = animalMap.animalAt(position).get(0);
+                animal.eat(plantMap.plantAt(position));
+                plantMap.removePlant(position);
+            }
+        }
     }
 
 
@@ -38,6 +53,10 @@ public class WorldMap {
         } else {
             return null;
         }
+    }
+
+    public List<Animal> getAllAnimals(){
+        return animalMap.getAllAnimals();
     }
 
 }
