@@ -1,13 +1,11 @@
 package agh.ics.oop.model;
 
-import java.util.List;
-
 public class WorldMap {
-    private final PlantMap planMap;
+    private final PlantMap plantMap;
     private final AnimalMap animalMap;
 
     public WorldMap(PlantMap planMap, AnimalMap animalMap) {
-        this.planMap = planMap;
+        this.plantMap = planMap;
         this.animalMap = animalMap;
     }
 
@@ -19,6 +17,9 @@ public class WorldMap {
         animalMap.move(animal);
     }
 
+    public void place(Animal animal) {
+        animalMap.place(animal);
+    }
 
     public void reproduction(Vector2D position) {
         animalMap.reproduction(position);
@@ -26,7 +27,17 @@ public class WorldMap {
 
 
     public void plantGrass(int count) {
-        planMap.PlantGrass(count);
+        plantMap.PlantGrass(count);
+    }
+
+    public Object objectAt(Vector2D position) {
+        if (animalMap.isOccupied(position)) {
+            return animalMap.animalAt(position);
+        } else if (plantMap.isOccupied(position)) {
+            return plantMap.plantAt(position);
+        } else {
+            return null;
+        }
     }
 
 }

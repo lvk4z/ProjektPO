@@ -1,16 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.shape.Rectangle?>
 
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             minHeight="750.0" minWidth="850.0"
             fx:controller="agh.ics.oop.GUI.SimulationPresenter">
     <top>
-        <VBox>
-            <Label fx:id="configLabel" />
-        </VBox>
+        <Label fx:id="configLabel" />
+        <Label fx:id="dayLabel" />
     </top>
+    <center>
+        <GridPane fx:id="mapGrid" alignment="center" hgap="1" vgap="1"/>
+    </center>
 </BorderPane>

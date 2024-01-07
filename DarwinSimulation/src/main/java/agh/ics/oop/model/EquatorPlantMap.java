@@ -6,7 +6,7 @@ import static java.lang.Math.round;
 
 public class EquatorPlantMap extends AbstractPlantMap {
 
-    protected EquatorPlantMap(int width, int height, int grassEnergy) {
+    public EquatorPlantMap(int width, int height, int grassEnergy) {
         super(width, height, grassEnergy);
     }
 
@@ -30,8 +30,7 @@ public class EquatorPlantMap extends AbstractPlantMap {
     }
 
 
-    @Override
-    public void PlantGrass(int count) {}
+
 
 
 

@@ -7,4 +7,6 @@ public interface PlantMap {
 
     void removePlant(Vector2D position);
 
+    boolean isOccupied(Vector2D position);
+
 }

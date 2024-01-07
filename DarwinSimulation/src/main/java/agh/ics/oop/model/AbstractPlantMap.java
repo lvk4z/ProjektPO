@@ -48,4 +48,8 @@ public abstract class AbstractPlantMap implements PlantMap{
 
     @Override
     public void removePlant(Vector2D position){plants.remove(position);}
+
+    public boolean isOccupied(Vector2D position) {
+        return plants.containsKey(position);
+    }
 }
