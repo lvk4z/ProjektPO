@@ -13,7 +13,7 @@ public class EquatorPlantMap extends AbstractPlantMap {
     @Override
     protected List<Vector2D> getPreferredPositions() {
         int preferredHeight = (int) Math.round(0.2 * height);
-        int firstHeight = (int) Math.floor((float) (height - preferredHeight) / 2) + 1;
+        int firstHeight = (int) Math.floor((float) (height - preferredHeight) / 2);
 
         return populatePositionRange(firstHeight, firstHeight + preferredHeight, width);
     }
@@ -21,18 +21,13 @@ public class EquatorPlantMap extends AbstractPlantMap {
     @Override
     protected List<Vector2D> getWorsePositions() {
         int preferredHeight = (int) Math.round(0.2 * height);
-        int firstHeight = (int) Math.floor((float) (height - preferredHeight) / 2) + 1;
+        int firstHeight = (int) Math.floor((float) (height - preferredHeight) / 2);
 
         List<Vector2D> worsePosition = new ArrayList<>(populatePositionRange(0, firstHeight, width));
         worsePosition.addAll(populatePositionRange(firstHeight + preferredHeight, height, width));
 
         return worsePosition;
     }
-
-
-
-
-
 
     private List<Vector2D> populatePositionRange(int startY, int endY, int width) {
         List<Vector2D> positions = new ArrayList<>();

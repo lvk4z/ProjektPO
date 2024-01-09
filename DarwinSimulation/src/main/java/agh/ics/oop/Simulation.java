@@ -16,6 +16,8 @@ public class Simulation implements Runnable {
     private final MapChangeListener mapChangeListener;
     int steps = 0;
 
+    private volatile boolean isRunning = true;
+
     private final Random random = new Random();
 
     public Simulation(WorldMap map, Configurations config, MapChangeListener mapChangeListener) {
@@ -31,11 +33,26 @@ public class Simulation implements Runnable {
             animals.add(animal);
             map.place(animal);
         }
+//        Animal animal = new Animal(new Vector2D(4,4), generateGenotype(config.getGenomeLength()), -1);
+//        Animal animal2 = new Animal(new Vector2D(10,7), generateGenotype(config.getGenomeLength()), -1);
+//        animals.add(animal);
+//        animals.add(animal2);
+//        map.place(animal);
+//        map.place(animal2);
     }
 
     @Override
     public void run() {
-        while (steps < 100) {
+        while (steps<300){
+
+            if (!isRunning) {
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+                continue;
+            }
 
             map.removeDeadAnimals();
 
@@ -43,7 +60,7 @@ public class Simulation implements Runnable {
                 map.move(animal);
                 mapChangeListener.mapChanged(map);
                 try {
-                    Thread.sleep(1000);
+                    Thread.sleep(100);
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
@@ -79,4 +96,11 @@ public class Simulation implements Runnable {
         return genes;
     }
 
+    public void stopSimulation() {
+        isRunning = false;
+    }
+
+    public void resumeSimulation() {
+        isRunning = true;
+    }
 }

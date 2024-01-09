@@ -12,7 +12,7 @@ class AnimalTest {
 
     @Test
     void move() {
-        AnimalMap map = new AnimalMap(6,6,0,0);
+        AnimalMap map = new AnimalMap(6,6,0,0, null);
         List<Integer> genes = new ArrayList<>();
         genes.add(2);
         Vector2D result = new Vector2D(1,0);
@@ -24,7 +24,7 @@ class AnimalTest {
 
     @Test
     void moveOutOfBorder() {
-        AnimalMap map = new AnimalMap(6,6,0,0);
+        AnimalMap map = new AnimalMap(6,6,0,0, null);
         List<Integer> genes = new ArrayList<>();
         genes.add(0);
         Vector2D result = new Vector2D(0,0);
@@ -35,7 +35,7 @@ class AnimalTest {
 
     @Test
     void moveCrossOfBorder() {
-        AnimalMap map = new AnimalMap(6,6,0,0);
+        AnimalMap map = new AnimalMap(6,6,0,0, null);
         List<Integer> genes = new ArrayList<>();
         genes.add(0);
         Vector2D result = new Vector2D(0,5);

@@ -6,9 +6,10 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.shape.Rectangle?>
 
+<?import javafx.scene.control.Button?>
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            minHeight="750.0" minWidth="850.0"
+            minHeight="600.0" minWidth="850.0"
             fx:controller="agh.ics.oop.GUI.SimulationPresenter">
     <top>
         <Label fx:id="configLabel" />
@@ -17,4 +18,7 @@
     <center>
         <GridPane fx:id="mapGrid" alignment="center" hgap="1" vgap="1"/>
     </center>
+    <bottom>
+        <Button fx:id="stopButton" text="Stop" onAction="#stopSimulation"/>
+    </bottom>
 </BorderPane>

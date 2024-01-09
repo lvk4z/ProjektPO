@@ -4,20 +4,15 @@ import java.util.*;
 
 public abstract class AbstractPlantMap implements PlantMap{
     protected final Map<Vector2D,Plant> plants = new HashMap<>();
-
     protected final int width, height, grassEnergy;
-
     protected abstract List<Vector2D> getPreferredPositions();
-
     protected abstract List<Vector2D> getWorsePositions();
     private final Random rand = new Random();
-
     protected AbstractPlantMap(int width, int height, int grassEnergy) {
         this.width = width;
         this.height = height;
         this.grassEnergy = grassEnergy;
     }
-
     @Override
     public void PlantGrass(int count) {
 
@@ -50,15 +45,12 @@ public abstract class AbstractPlantMap implements PlantMap{
             if(!flag)break;
         }
     }
-
     @Override
     public WorldElement plantAt(Vector2D position) {
         return plants.get(position);
     }
-
     @Override
     public void removePlant(Vector2D position){plants.remove(position);}
-
     public boolean isOccupied(Vector2D position) {
         return plants.containsKey(position);
     }

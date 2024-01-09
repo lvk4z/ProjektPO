@@ -10,14 +10,17 @@ public class AnimalMap implements MoveValidator {
     private final int reproductionEnergy;
     private final int energyToReproduce;
     private final Map<Vector2D, List<Animal>> animals = new HashMap<>();
+
+    private final GraveChangeListener changeListener;
     Random rand = new Random();
     private int dayNumber;
 
-    public AnimalMap(int height, int width, int reproductionEnergy, int energyToReproduce) {
+    public AnimalMap(int height, int width, int reproductionEnergy, int energyToReproduce, GraveChangeListener changeListener) {
         this.height = height;
         this.width = width;
         this.reproductionEnergy = reproductionEnergy;
         this.energyToReproduce = energyToReproduce;
+        this.changeListener = changeListener;
         dayNumber = 0;
     }
 
@@ -56,8 +59,7 @@ public class AnimalMap implements MoveValidator {
     }
 
     public void reproduction() {
-        List<Vector2D> positions = new ArrayList<>(animals.keySet());
-        for(Vector2D position : positions) {
+        for(Vector2D position : (animals.keySet())) {
             List<Animal> animals = animalAt(position);
             if (animals.size() > 1) {
                 Animal parent1 = animals.get(0);
@@ -68,7 +70,6 @@ public class AnimalMap implements MoveValidator {
                     parent2.loseEnergy(reproductionEnergy);
                     Animal baby = new Animal(position, newGenes, 2 * reproductionEnergy);
                     place(baby);
-
                 }
             }
         }
@@ -80,10 +81,10 @@ public class AnimalMap implements MoveValidator {
         int animal2Part = animal2.getGenes().size() - animal1Part;
         int side = rand.nextInt(2);
         List<Integer> newGenes = new ArrayList<>();
-        if ((side == 0 && animal1Part > animal2Part) || (side == 1 && animal2Part > animal1Part)) {
+        if ((side == 0 && animal1Part >= animal2Part) || (side == 1 && animal2Part >= animal1Part)) {
             newGenes.addAll(animal1.getGenes().stream().limit(animal1Part).toList());
             newGenes.addAll(animal2.getGenes().stream().skip(animal2.getGenes().size() - animal2Part).toList());
-        } else if ((side == 0 && animal2Part > animal1Part) || (side == 1 && animal1Part > animal2Part)) {
+        } else {
             newGenes.addAll(animal2.getGenes().stream().limit(animal2Part).toList());
             newGenes.addAll(animal1.getGenes().stream().skip(animal1.getGenes().size() - animal1Part).toList());
         }
@@ -121,6 +122,7 @@ public class AnimalMap implements MoveValidator {
             if (animal.energy() <= 0) {
                 List<Animal> animalsAtPosition = animals.get(animal.position());
                 animalsAtPosition.remove(animal);
+                if(changeListener != null)changeListener.addDeadBody(animal.position());
                 if (animalsAtPosition.isEmpty()) animals.remove(animal.position());
             }
         }
