@@ -5,12 +5,12 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-public class GravePlantMap extends AbstractPlantMap {
+public class GravePlantMap extends AbstractPlantMap implements GraveChangeListener{
 
     private final List<Vector2D> deadBodies;
-    public GravePlantMap(int width, int height, int grassEnergy, List<Vector2D> deadBodies) {
+    public GravePlantMap(int width, int height, int grassEnergy) {
         super(width, height, grassEnergy);
-        this.deadBodies = deadBodies;
+        deadBodies = new ArrayList<>();
     }
 
     @Override
@@ -23,8 +23,6 @@ public class GravePlantMap extends AbstractPlantMap {
         return findWorsePositions(getPreferredPositions());
     }
 
-    @Override
-    public void PlantGrass(int count) {}
 
     private List<Vector2D> findPreferredPositions() {
         List<Vector2D> preferred = new ArrayList<>();
@@ -74,5 +72,12 @@ public class GravePlantMap extends AbstractPlantMap {
     }
 
 
-
+    @Override
+    public void addDeadBody(Vector2D body) {
+        if(deadBodies.size()<10) deadBodies.add(body);
+        else{
+            deadBodies.remove(0);
+            deadBodies.add(body);
+        }
+    }
 }

@@ -35,23 +35,24 @@ public class Animal implements WorldElement {
     }
 
     public void move(MoveValidator validator){
-        int rotation = lifetime % genes.size();
-        rotate(genes.get(rotation));
-        Vector2D moveVector = orientation.toUnitVector();
-        Vector2D horizontalValidator = validator.canMoveHorizontally(position.add(moveVector));
-        boolean verticalValidator = validator.canMoveVertically(position.add(moveVector));
+        if(!genes.isEmpty()) {
+            int rotation = lifetime % genes.size();
+            rotate(genes.get(rotation));
+            Vector2D moveVector = orientation.toUnitVector();
+            Vector2D horizontalValidator = validator.canMoveHorizontally(position.add(moveVector));
+            boolean verticalValidator = validator.canMoveVertically(position.add(moveVector));
 
-        if(horizontalValidator == null && verticalValidator){
-            position = position.add(moveVector);
-        }else if(horizontalValidator != null && !verticalValidator){
-            orientation = orientation.rotate(4);
-            position = new Vector2D(horizontalValidator.getX(),horizontalValidator.getY()-1);
-        }else if (horizontalValidator != null){
-            position = horizontalValidator;
-        } else {
-            orientation = orientation.rotate(4);
+            if (horizontalValidator == null && verticalValidator) {
+                position = position.add(moveVector);
+            } else if (horizontalValidator != null && !verticalValidator) {
+                orientation = orientation.rotate(4);
+                position = new Vector2D(horizontalValidator.getX(), horizontalValidator.getY() - 1);
+            } else if (horizontalValidator != null) {
+                position = horizontalValidator;
+            } else {
+                orientation = orientation.rotate(4);
+            }
         }
-
     }
 
     public void eat(WorldElement plant){

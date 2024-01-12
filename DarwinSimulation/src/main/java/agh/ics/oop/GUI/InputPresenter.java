@@ -1,6 +1,11 @@
 package agh.ics.oop.GUI;
 
 
+import agh.ics.oop.Simulation;
+import agh.ics.oop.model.AnimalMap;
+import agh.ics.oop.model.EquatorPlantMap;
+import agh.ics.oop.model.WorldMap;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 
 import javafx.fxml.FXMLLoader;
@@ -8,16 +13,14 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class InputPresenter {
-    private List<Stage> openedWindows = new ArrayList<>();
+    private final List<Stage> openedWindows = new ArrayList<>();
     @FXML
     private TextField widthTextField;
 
@@ -62,7 +65,7 @@ public class InputPresenter {
 
 
     private Map<String, String> getConfigurationDetails() {
-        Map<String, String> configDetails = new LinkedHashMap<>();
+        Map<String, String> configDetails = new HashMap<>();
 
         configDetails.put("Map's width", widthTextField.getText());
         configDetails.put("Map's height", heightTextField.getText());
@@ -84,21 +87,25 @@ public class InputPresenter {
     @FXML
     private void onSimulationStartClicked() {
         Map<String, String> configDetails = getConfigurationDetails();
-        openMainWindow(configDetails);
+        Configurations config = new Configurations(configDetails);
+        openMainWindow(config);
     }
 
-    private void openMainWindow(Map<String, String> configDetails) {
+    private void openMainWindow(Configurations config) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("main.fxml"));
             Parent root = loader.load();
 
             SimulationPresenter simulationPresenter = loader.getController();
-            simulationPresenter.initialize(configDetails);
+            Platform.runLater(() -> {
+                simulationPresenter.initialize(config);
+
+            });
 
             Stage mainStage = new Stage();
 
 
-            mainStage.setTitle("Empty Window");
+            mainStage.setTitle("Simulation");
             mainStage.setScene(new Scene(root));
             openedWindows.add(mainStage);
             mainStage.setOnCloseRequest(event -> openedWindows.remove(mainStage));

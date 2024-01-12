@@ -14,46 +14,46 @@
     <center>
         <GridPane alignment="center" hgap="10" vgap="10">
             <Label text="Map's width:" GridPane.rowIndex="1" />
-            <TextField fx:id="widthTextField"  GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+            <TextField fx:id="widthTextField" text="30" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
 
             <Label text="Map's height:" GridPane.rowIndex="2"/>
-            <TextField fx:id="heightTextField"  GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+            <TextField fx:id="heightTextField"  text="30" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
 
             <Label text="Initial Number of Plants:" GridPane.rowIndex="3"/>
-            <TextField fx:id="initialPlantsTextField" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+            <TextField fx:id="initialPlantsTextField" text="10" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
 
             <Label text="Single plant energy:" GridPane.rowIndex="4"/>
-            <TextField fx:id="plantEnergyTextField" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+            <TextField fx:id="plantEnergyTextField" text="30" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
 
             <Label text="Number of plants growing each day:" GridPane.rowIndex="5"/>
-            <TextField fx:id="numberOfPlantsGrowingTextField" GridPane.columnIndex="1" GridPane.rowIndex="5"/>
+            <TextField fx:id="numberOfPlantsGrowingTextField"  text="3" GridPane.columnIndex="1" GridPane.rowIndex="5"/>
 
             <Label text="Plant Development Option:" GridPane.rowIndex="6"/>
             <CheckBox fx:id="corpsesPlantGrowthButton" text="Life-giving corpses" GridPane.columnIndex="1" GridPane.rowIndex="6"/>
 
             <Label text="Initial Number of Animals:" GridPane.rowIndex="7"/>
-            <TextField fx:id="initialAnimalsTextField" GridPane.columnIndex="1" GridPane.rowIndex="7"/>
+            <TextField fx:id="initialAnimalsTextField" text="2" GridPane.columnIndex="1" GridPane.rowIndex="7"/>
 
             <Label text="Initial animals' energy:" GridPane.rowIndex="8"/>
-            <TextField fx:id="initialAnimalEnergyTextField" GridPane.columnIndex="1" GridPane.rowIndex="8"/>
+            <TextField fx:id="initialAnimalEnergyTextField" text="100" GridPane.columnIndex="1" GridPane.rowIndex="8"/>
 
             <Label text="Energy to consider the animal as full and ready to breed:" GridPane.rowIndex="9"/>
-            <TextField fx:id="requiredEnergyToBreedTextField" GridPane.columnIndex="1" GridPane.rowIndex="9"/>
+            <TextField fx:id="requiredEnergyToBreedTextField"  text="50" GridPane.columnIndex="1" GridPane.rowIndex="9"/>
 
             <Label text="Energy used for reproduction:" GridPane.rowIndex="10"/>
-            <TextField fx:id="energyLostToBreedTextField" GridPane.columnIndex="1" GridPane.rowIndex="10"/>
+            <TextField fx:id="energyLostToBreedTextField" text="20" GridPane.columnIndex="1" GridPane.rowIndex="10"/>
 
             <Label text="Min number of mutations:" GridPane.rowIndex="11"/>
-            <TextField fx:id="minMutationsTextField" GridPane.columnIndex="1" GridPane.rowIndex="11"/>
+            <TextField fx:id="minMutationsTextField" text="10" GridPane.columnIndex="1" GridPane.rowIndex="11"/>
 
             <Label text="Max number of mutations:" GridPane.rowIndex="12"/>
-            <TextField fx:id="maxMutationsTextField" GridPane.columnIndex="1" GridPane.rowIndex="12"/>
+            <TextField fx:id="maxMutationsTextField"  text="10" GridPane.columnIndex="1" GridPane.rowIndex="12"/>
 
             <Label text="Mutation variant:" GridPane.rowIndex="13"/>
             <CheckBox fx:id="mutationVariantButton" text="podmianka" GridPane.columnIndex="1" GridPane.rowIndex="13"/>
 
             <Label text="Genome length:" GridPane.rowIndex="14"/>
-            <TextField fx:id="genomeLengthTextField" GridPane.columnIndex="1" GridPane.rowIndex="14"/>
+            <TextField fx:id="genomeLengthTextField" text="3" GridPane.columnIndex="1" GridPane.rowIndex="14"/>
 
         </GridPane>
     </center>

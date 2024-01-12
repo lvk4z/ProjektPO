@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class AnimalMapTest {
     @Test
     void place() {
-        AnimalMap map = new AnimalMap(4,4,0, 0);
+        AnimalMap map = new AnimalMap(4,4,0, 0, null);
         Animal animal = new Animal(new Vector2D(0,0),null,0);
         map.place(animal);
         List<Animal> animals = map.animalAt(animal.position());
@@ -18,7 +18,7 @@ class AnimalMapTest {
 
     @Test
     void move() {
-        AnimalMap map = new AnimalMap(4,4,0, 0);
+        AnimalMap map = new AnimalMap(4,4,0, 0, null);
         Animal animal = new Animal(new Vector2D(0,0),List.of(0),0,Direction.NORTH);
         map.place(animal);
         map.move(animal);
@@ -28,7 +28,7 @@ class AnimalMapTest {
 
     @Test
     void canReproduce() {
-        AnimalMap map = new AnimalMap(4,4,50, 50);
+        AnimalMap map = new AnimalMap(4,4,50, 50, null);
         Animal animal = new Animal(new Vector2D(0,0),null,49);
         map.place(animal);
         assertFalse(map.canReproduce(animal));
@@ -36,7 +36,7 @@ class AnimalMapTest {
 
     @Test
     void reproduce() {
-        AnimalMap map = new AnimalMap(4,4,20, 20);
+        AnimalMap map = new AnimalMap(4,4,20, 20, null);
         Animal parent1 = new Animal(new Vector2D(0,0),List.of(1,2,3,4),75);
         Animal parent2 = new Animal(new Vector2D(0,0),List.of(4,3,2,1),25);
         map.place(parent1);
@@ -48,14 +48,14 @@ class AnimalMapTest {
 
     @Test
     void nextDay() {
-        AnimalMap map = new AnimalMap(4,4,50, 50);
+        AnimalMap map = new AnimalMap(4,4,50, 50, null);
         for(int i=0;i<5;i++)map.nextDay();
         assertEquals(map.getDay(),5);
     }
 
     @Test
     void getAllAnimals() {
-        AnimalMap map = new AnimalMap(4,4,0, 0);
+        AnimalMap map = new AnimalMap(4,4,0, 0, null);
         Animal animal1 = new Animal(new Vector2D(0,0),null,0);
         Animal animal2 = new Animal(new Vector2D(0,0),null,0);
         Animal animal3 = new Animal(new Vector2D(1,0),null,0);
@@ -68,7 +68,7 @@ class AnimalMapTest {
 
     @Test
     void removeDeadAnimals() {
-        AnimalMap map = new AnimalMap(4,4,0, 0);
+        AnimalMap map = new AnimalMap(4,4,0, 0, null);
         Animal animal1 = new Animal(new Vector2D(0,0),null,-1);
         Animal animal2 = new Animal(new Vector2D(0,0),null,-1);
         Animal animal3 = new Animal(new Vector2D(1,0),null,10);
