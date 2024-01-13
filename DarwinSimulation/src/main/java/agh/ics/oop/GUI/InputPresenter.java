@@ -105,10 +105,16 @@ public class InputPresenter {
             Stage mainStage = new Stage();
 
 
+            var scene = new Scene(root);
+            String css = Objects.requireNonNull(getClass().getResource("/style.css")).toExternalForm();
+            scene.getStylesheets().add(css);
             mainStage.setTitle("Simulation");
-            mainStage.setScene(new Scene(root));
+            mainStage.setScene(scene);
             openedWindows.add(mainStage);
-            mainStage.setOnCloseRequest(event -> openedWindows.remove(mainStage));
+            mainStage.setOnCloseRequest(event -> {
+                openedWindows.remove(mainStage);
+                simulationPresenter.stopSimulation();
+            });
             mainStage.showAndWait();
         } catch (Exception e) {
             e.printStackTrace();

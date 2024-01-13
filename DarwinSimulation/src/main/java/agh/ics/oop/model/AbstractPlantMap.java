@@ -54,5 +54,8 @@ public abstract class AbstractPlantMap implements PlantMap{
     public boolean isOccupied(Vector2D position) {
         return plants.containsKey(position);
     }
+    public List<Plant> getAllPlants(){
+        return new ArrayList<>(plants.values());
+    }
 
 }

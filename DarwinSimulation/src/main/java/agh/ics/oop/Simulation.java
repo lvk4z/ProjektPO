@@ -1,6 +1,7 @@
 package agh.ics.oop;
 
 import agh.ics.oop.GUI.Configurations;
+import agh.ics.oop.Stats.SimulationStatistics;
 import agh.ics.oop.model.*;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
@@ -11,6 +12,7 @@ import java.util.Random;
 
 public class Simulation implements Runnable {
     private final Configurations config;
+    private final SimulationStatistics statistics;
     private final WorldMap map;
     private List<Animal> animals = new ArrayList<>();
     private final MapChangeListener mapChangeListener;
@@ -22,6 +24,7 @@ public class Simulation implements Runnable {
 
     public Simulation(WorldMap map, Configurations config, MapChangeListener mapChangeListener) {
         this.config = config;
+        this.statistics = new SimulationStatistics();
         this.map = map;
         this.mapChangeListener = mapChangeListener;
         map.plantGrass(config.getInitialPlants());
@@ -53,12 +56,12 @@ public class Simulation implements Runnable {
                 }
                 continue;
             }
-
+            statistics.updateFromSimulation(map);
             map.removeDeadAnimals();
 
             for (Animal animal : animals) {
                 map.move(animal);
-                mapChangeListener.mapChanged(map);
+                mapChangeListener.mapChanged(map,statistics);
                 try {
                     Thread.sleep(100);
                 } catch (InterruptedException e) {
@@ -72,7 +75,12 @@ public class Simulation implements Runnable {
 
             map.plantGrass(config.getPlantsGrowingEachDay());
 
+            mapChangeListener.dayPassed(statistics);
+
             animals = map.getAllAnimals();
+
+
+
             steps++;
         }
     }

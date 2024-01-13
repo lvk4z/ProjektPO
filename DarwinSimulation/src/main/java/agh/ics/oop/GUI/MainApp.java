@@ -2,9 +2,13 @@ package agh.ics.oop.GUI;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
+
+import java.util.Objects;
 
 public class MainApp extends Application {
 
@@ -22,6 +26,12 @@ public class MainApp extends Application {
 
     private void configureStage(Stage primaryStage, BorderPane viewRoot) {
         var scene = new Scene(viewRoot);
+        String css = Objects.requireNonNull(getClass().getResource("/style.css")).toExternalForm();
+        scene.getStylesheets().add(css);
+        Screen screen = Screen.getPrimary();
+        Rectangle2D bounds = screen.getVisualBounds();
+        primaryStage.setX(bounds.getMinX());
+        primaryStage.setY(bounds.getMinY());
         primaryStage.setScene(scene);
         primaryStage.setTitle("Darwin World");
         primaryStage.minWidthProperty().bind(viewRoot.minWidthProperty());
