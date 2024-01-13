@@ -32,7 +32,7 @@
             <CheckBox fx:id="corpsesPlantGrowthButton" text="Life-giving corpses" GridPane.columnIndex="1" GridPane.rowIndex="6"/>
 
             <Label text="Initial Number of Animals:" GridPane.rowIndex="7"/>
-            <TextField fx:id="initialAnimalsTextField" text="2" GridPane.columnIndex="1" GridPane.rowIndex="7"/>
+            <TextField fx:id="initialAnimalsTextField" text="20" GridPane.columnIndex="1" GridPane.rowIndex="7"/>
 
             <Label text="Initial animals' energy:" GridPane.rowIndex="8"/>
             <TextField fx:id="initialAnimalEnergyTextField" text="100" GridPane.columnIndex="1" GridPane.rowIndex="8"/>

@@ -67,7 +67,9 @@ public class AnimalMap implements MoveValidator {
                 if (canReproduce(parent1) && canReproduce(parent2)) {
                     List<Integer> newGenes = reproduce(parent1, parent2);
                     parent1.loseEnergy(reproductionEnergy);
+                    parent1.addKid();
                     parent2.loseEnergy(reproductionEnergy);
+                    parent2.addKid();
                     Animal baby = new Animal(position, newGenes, 2 * reproductionEnergy);
                     place(baby);
                 }

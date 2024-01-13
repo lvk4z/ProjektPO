@@ -1,24 +1,63 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.paint.Color?>
-<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.chart.*?>
+<?import javafx.geometry.*?>
 
-<?import javafx.scene.control.Button?>
-<BorderPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            minHeight="600.0" minWidth="850.0"
+<?import javafx.scene.text.Text?>
+<BorderPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+            minHeight="700.0" minWidth="900.0"
             fx:controller="agh.ics.oop.GUI.SimulationPresenter">
+
     <top>
-        <Label fx:id="configLabel" />
-        <Label fx:id="dayLabel" />
+        <HBox spacing="10" alignment="CENTER_RIGHT">
+            <VBox fx:id="statisticsSection" minWidth="200"  alignment="TOP_CENTER">
+                <Label text="Statistics" />
+                <HBox>
+                    <Label text="Day: " />
+                    <Text fx:id="sDay" text="0" />
+                </HBox>
+                <HBox>
+                    <Label text="Number of alive animals: " />
+                    <Text fx:id="sTotalAnimals" text="0" />
+                </HBox>
+                <HBox>
+                    <Label text="Number of alive plants: " />
+                    <Text fx:id="sTotalPlants" text="0" />
+                </HBox>
+                <HBox>
+                    <Label text="Average energy of living animals: " />
+                    <Text fx:id="sAverageEnergy" text="0" />
+                </HBox>
+                <HBox>
+                    <Label text="Average life span of dead animals: " />
+                    <Text fx:id="sAverageLifeSpan" text="0" />
+                </HBox>
+                <HBox>
+                    <Label text="Average number of children of living animals: " />
+                    <Text fx:id="sChildren" text="0" />
+                </HBox>
+            </VBox>
+            <Separator orientation="VERTICAL" />
+            <VBox fx:id="mapVisualization" alignment="CENTER">
+                <padding>
+                    <Insets top="5" right="10" bottom="5" left="5" />
+                </padding>
+                <GridPane fx:id="mapGrid" alignment="CENTER" maxWidth="500" maxHeight="500" hgap="1" vgap="1" styleClass="gridpane"/>
+            </VBox>
+        </HBox>
     </top>
-    <center>
-        <GridPane fx:id="mapGrid" alignment="center" hgap="1" vgap="1"/>
-    </center>
     <bottom>
-        <Button fx:id="stopButton" text="Stop" onAction="#stopSimulation"/>
+        <HBox spacing="10" >
+            <VBox fx:id="buttonSection" alignment="BOTTOM_LEFT" minWidth="200">
+                <Button fx:id="stopButton" text="Stop" onAction="#stopSimulation" minWidth="300" minHeight="60"/>
+                <Button fx:id="highlightDominantGenotypeButton" text="Highlight Dominant Genotype" onAction="#highlightDominantGenotype" minWidth="300" minHeight="60"/>
+                <Button fx:id="highlightPlantFieldsButton" text="Highlight Plant Fields" onAction="#highlightPlantFields" minWidth="300" minHeight="60"/>
+            </VBox>
+            <VBox fx:id="chartBox" alignment="BOTTOM_RIGHT">
+
+            </VBox>
+        </HBox>
     </bottom>
 </BorderPane>
