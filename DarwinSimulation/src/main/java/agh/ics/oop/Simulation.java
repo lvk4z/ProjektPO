@@ -3,8 +3,6 @@ package agh.ics.oop;
 import agh.ics.oop.GUI.Configurations;
 import agh.ics.oop.Stats.SimulationStatistics;
 import agh.ics.oop.model.*;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,12 +34,6 @@ public class Simulation implements Runnable {
             animals.add(animal);
             map.place(animal);
         }
-//        Animal animal = new Animal(new Vector2D(4,4), generateGenotype(config.getGenomeLength()), -1);
-//        Animal animal2 = new Animal(new Vector2D(10,7), generateGenotype(config.getGenomeLength()), -1);
-//        animals.add(animal);
-//        animals.add(animal2);
-//        map.place(animal);
-//        map.place(animal2);
     }
 
     @Override
@@ -78,8 +70,6 @@ public class Simulation implements Runnable {
             mapChangeListener.dayPassed(statistics);
 
             animals = map.getAllAnimals();
-
-
 
             steps++;
         }

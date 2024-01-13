@@ -6,6 +6,10 @@ public abstract class AbstractPlantMap implements PlantMap{
     protected final Map<Vector2D,Plant> plants = new HashMap<>();
     protected final int width, height, grassEnergy;
     protected abstract List<Vector2D> getPreferredPositions();
+    @Override
+    public List<Vector2D> getPreferredPositionsList() {
+        return getPreferredPositions();
+    }
     protected abstract List<Vector2D> getWorsePositions();
     private final Random rand = new Random();
     protected AbstractPlantMap(int width, int height, int grassEnergy) {

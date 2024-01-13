@@ -124,6 +124,7 @@ public class AnimalMap implements MoveValidator {
             if (animal.energy() <= 0) {
                 List<Animal> animalsAtPosition = animals.get(animal.position());
                 animalsAtPosition.remove(animal);
+                animal.setDeathDay(dayNumber);
                 if(changeListener != null)changeListener.addDeadBody(animal.position());
                 if (animalsAtPosition.isEmpty()) animals.remove(animal.position());
             }

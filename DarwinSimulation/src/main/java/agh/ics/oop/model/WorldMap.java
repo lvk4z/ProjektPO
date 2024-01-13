@@ -57,7 +57,6 @@ public class WorldMap {
         }
     }
 
-
     public List<Animal> getAllAnimals() {
         return animalMap.getAllAnimals();
     }
@@ -69,4 +68,6 @@ public class WorldMap {
     public int getDay() {
         return day;
     }
+
+    public List<Vector2D> getPreferredGrassPositions() {return plantMap.getPreferredPositionsList();}
 }
