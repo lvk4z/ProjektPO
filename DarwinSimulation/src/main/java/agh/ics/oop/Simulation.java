@@ -50,12 +50,11 @@ public class Simulation implements Runnable {
             }
             statistics.updateFromSimulation(map);
             map.removeDeadAnimals();
-
             for (Animal animal : animals) {
                 map.move(animal);
                 mapChangeListener.mapChanged(map,statistics);
                 try {
-                    Thread.sleep(100);
+                    Thread.sleep(50);
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
@@ -67,7 +66,7 @@ public class Simulation implements Runnable {
 
             map.plantGrass(config.getPlantsGrowingEachDay());
 
-            mapChangeListener.dayPassed(statistics);
+            //mapChangeListener.dayPassed(statistics);
 
             animals = map.getAllAnimals();
 
@@ -85,6 +84,8 @@ public class Simulation implements Runnable {
         return positions;
     }
 
+
+
     private List<Integer> generateGenotype(int length) {
         List<Integer> genes = new ArrayList<>();
         for(int i=0;i<length;i++){
@@ -100,5 +101,9 @@ public class Simulation implements Runnable {
 
     public void resumeSimulation() {
         isRunning = true;
+    }
+
+    public WorldMap getMap() {
+        return map;
     }
 }

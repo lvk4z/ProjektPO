@@ -1,10 +1,13 @@
 package agh.ics.oop.Stats;
 
 import agh.ics.oop.model.Animal;
+import agh.ics.oop.model.Genotype;
 import agh.ics.oop.model.Plant;
 import agh.ics.oop.model.WorldMap;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class SimulationStatistics {
     private int currentDay;
@@ -15,6 +18,8 @@ public class SimulationStatistics {
     private double averageNumberOfChildrenForLivingAnimals;
     private double totalLifeSpanOfDeadAnimals = 0;
     private int totalDeadAnimals = 0;
+    private List<Integer> dominantGenotype;
+
     public SimulationStatistics() {
         this.currentDay = 0;
         this.totalAnimals = 0;
@@ -22,39 +27,62 @@ public class SimulationStatistics {
         this.averageEnergy = 0.0;
         this.averageLifeSpanForDeadAnimals = 0.0;
         this.averageNumberOfChildrenForLivingAnimals = 0.0;
+        this.dominantGenotype = null;
     }
 
     public void updateFromSimulation(WorldMap worldMap) {
         List<Animal> animals = worldMap.getAllAnimals();
         List<Plant> plants = worldMap.getAllPlants();
 
-        this.currentDay = worldMap.getDay();
-        this.totalAnimals = animals.size();
-        this.totalPlants = plants.size();
-        this.averageEnergy = calculateAverageEnergy(animals);
-        this.averageLifeSpanForDeadAnimals = calculateAverageLifeSpan(animals);
-        this.averageNumberOfChildrenForLivingAnimals = calculateAverageNumberOfChildren(animals);
+        currentDay = worldMap.getDay();
+        totalAnimals = animals.size();
+        totalPlants = plants.size();
+        averageEnergy = calculateAverageEnergy(animals);
+        averageLifeSpanForDeadAnimals = calculateAverageLifeSpan(animals);
+        averageNumberOfChildrenForLivingAnimals = calculateAverageNumberOfChildren(animals);
+        dominantGenotype = calculateDominantGenotype(animals);
+    }
+
+    private List<Integer> calculateDominantGenotype(List<Animal> animals) {
+        if (animals.isEmpty()) {
+            return null;
+        }
+
+        Map<List<Integer>, Integer> genotypeFrequency = new HashMap<>();
+        for (Animal animal : animals) {
+            List<Integer> genotype = animal.getGenes();
+            genotypeFrequency.put(genotype, genotypeFrequency.getOrDefault(genotype, 0) + 1);
+        }
+
+        Map.Entry<List<Integer>, Integer> dominantEntry = null;
+        for (Map.Entry<List<Integer>, Integer> entry : genotypeFrequency.entrySet()) {
+            if (dominantEntry == null || entry.getValue() > dominantEntry.getValue()) {
+                dominantEntry = entry;
+            }
+        }
+
+        return dominantEntry != null ? dominantEntry.getKey() : null;
     }
 
     private double calculateAverageEnergy(List<Animal> animals) {
         double result = Math.round(animals.stream().mapToInt(Animal::energy).average().orElse(0.0) * 100);
-        return  result/100;
+        return result / 100;
     }
 
     private double calculateAverageLifeSpan(List<Animal> animals) {
         for (Animal animal : animals) {
-            if(!animal.isStillAlive()) {
+            if (!animal.isStillAlive()) {
                 totalLifeSpanOfDeadAnimals += animal.getLifetime();
                 totalDeadAnimals++;
             }
         }
-        double result = Math.round(totalDeadAnimals > 0 ? totalLifeSpanOfDeadAnimals / totalDeadAnimals * 100 : 0.0 );
-        return result/100;
-}
+        double result = Math.round(totalDeadAnimals > 0 ? totalLifeSpanOfDeadAnimals / totalDeadAnimals * 100 : 0.0);
+        return result / 100;
+    }
 
     private double calculateAverageNumberOfChildren(List<Animal> animals) {
         double result = Math.round(animals.stream().filter(Animal::isStillAlive).mapToInt(Animal::getKidsNumber).average().orElse(0.0));
-        return result/100;
+        return result / 100;
     }
 
 
@@ -80,5 +108,10 @@ public class SimulationStatistics {
 
     public String getAverageNumberOfChildrenForLivingAnimals() {
         return String.valueOf(averageNumberOfChildrenForLivingAnimals);
+    }
+
+    public List<Integer> getDominantGenotype() {
+
+        return dominantGenotype;
     }
 }
