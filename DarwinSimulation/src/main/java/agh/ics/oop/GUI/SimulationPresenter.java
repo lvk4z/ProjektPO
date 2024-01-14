@@ -1,6 +1,6 @@
 package agh.ics.oop.GUI;
 
-import agh.ics.oop.MapChangeListener;
+import agh.ics.oop.model.MapChangeListener;
 import agh.ics.oop.Simulation;
 import agh.ics.oop.Stats.ChartDrawer;
 import agh.ics.oop.model.*;
@@ -9,14 +9,10 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.paint.Color;
 
-import java.awt.*;
 import java.util.List;
 import java.util.Objects;
 
@@ -66,12 +62,14 @@ public class SimulationPresenter implements MapChangeListener, TrackedAnimalList
 
     @FXML
     private CheckBox grassCheckBox;
-
+    @FXML
+    private CheckBox highLightCheckBox;
     private Simulation simulation;
     private ChartDrawer chartDrawer;
     private MapDrawer mapDrawer;
     private Animal trackedAnimal = null;
     private List<Vector2D> preferredGrassPositions = null;
+    private List<Integer> dominantGenotype = null;
 
     @FXML
     public void initialize(Configurations config) {
@@ -92,6 +90,7 @@ public class SimulationPresenter implements MapChangeListener, TrackedAnimalList
         simulationThread.start();
 
         grassCheckBox.setDisable(true);
+        highLightCheckBox.setDisable(true);
 
         this.mapDrawer = new MapDrawer(config.getMapWidth(), config.getMapHeight(), this);
 
@@ -110,6 +109,7 @@ public class SimulationPresenter implements MapChangeListener, TrackedAnimalList
             }
             else vBoxAnimalInformation.setVisible(false);
             preferredGrassPositions = worldMap.getPreferredGrassPositions();
+            dominantGenotype = statistics.getDominantGenotype();
         });
     }
 
@@ -178,6 +178,7 @@ public class SimulationPresenter implements MapChangeListener, TrackedAnimalList
         simulation.stopSimulation();
         stopButton.setText("Resume");
         grassCheckBox.setDisable(false);
+        highLightCheckBox.setDisable(false);
         stopButton.setOnAction(e -> resumeSimulation());
         clearAnimalStats();
     }
@@ -188,11 +189,36 @@ public class SimulationPresenter implements MapChangeListener, TrackedAnimalList
         stopButton.setText("Stop");
         grassCheckBox.setSelected(false);
         grassCheckBox.setDisable(true);
+        highLightCheckBox.setSelected(false);
+        highLightCheckBox.setDisable(true);
         stopButton.setOnAction(e -> stopSimulation());
     }
     @FXML
     public void highlightDominantGenotype() {
+        if (dominantGenotype == null) return;
+        List<Animal> animals = simulation.getMap().getAllAnimals();
 
+        Platform.runLater(() -> {
+            if (highLightCheckBox.isSelected()) {
+                for (Animal animal : animals) {
+                    if (animal.getGenes().equals(dominantGenotype)) {
+                        StackPane cell = mapDrawer.getMapCell(animal.position().getX(), animal.position().getY());
+                        if (cell != null) {
+                            mapDrawer.highlightCell(cell, animal);
+                        }
+                    }
+                }
+            }else{
+                for (Animal animal : animals) {
+                    if (animal.getGenes().equals(dominantGenotype)) {
+                        StackPane cell = mapDrawer.getMapCell(animal.position().getX(), animal.position().getY());
+                        if (cell != null) {
+                            mapDrawer.unHighlightCell(cell, animal);
+                        }
+                    }
+                }
+            }
+        });
     }
 
     @Override
