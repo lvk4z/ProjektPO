@@ -1,10 +1,7 @@
 package agh.ics.oop.model;
 
-import javax.xml.validation.Validator;
-import java.time.temporal.ValueRange;
 import java.util.List;
 import java.util.Random;
-import java.util.Vector;
 
 public class Animal implements WorldElement {
 
@@ -12,7 +9,8 @@ public class Animal implements WorldElement {
     private Vector2D position;
     private Direction orientation;
     private final List<Integer> genes;
-    private int energy,lifetime,kids;
+    private int energy,lifetime,kids,grassEaten;
+    private int deathDay, nextActiveGen;
 
     Random rand = new Random();
 
@@ -26,7 +24,8 @@ public class Animal implements WorldElement {
         this.orientation = orientation;
         this.genes = genes;
         this.energy = energy;
-        lifetime=kids=0;
+        lifetime=kids=grassEaten=deathDay=0;
+        nextActiveGen = genes.get(0);
     }
 
     public Animal(Vector2D position, List<Integer> genes, int energy){
@@ -52,11 +51,14 @@ public class Animal implements WorldElement {
             } else {
                 orientation = orientation.rotate(4);
             }
+
+            nextActiveGen=genes.get((lifetime+1) % genes.size());
         }
     }
 
     public void eat(WorldElement plant){
         energy+=plant.energy();
+        grassEaten++;
     }
 
     public boolean isStillAlive(){
@@ -78,7 +80,11 @@ public class Animal implements WorldElement {
     public void addLifeLength(){lifetime++;}
 
     public Direction getOrientation() {return orientation;}
+    public int getGrassEaten() {return grassEaten;}
+    public int getDeathDay() {return deathDay;}
+    public void setDeathDay(int day) {deathDay=day;}
 
+    public int getNextActiveGen() {return nextActiveGen;}
     public List<Integer> getGenes() {return genes;}
 
     public int getLifetime() {return lifetime;}

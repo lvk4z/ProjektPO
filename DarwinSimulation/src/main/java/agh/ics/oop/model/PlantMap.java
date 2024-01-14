@@ -13,4 +13,6 @@ public interface PlantMap {
     boolean isOccupied(Vector2D position);
 
     List<Plant> getAllPlants();
+
+    List<Vector2D> getPreferredPositionsList();
 }
