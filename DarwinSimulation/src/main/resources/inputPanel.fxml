@@ -9,7 +9,7 @@
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             minHeight="550.0" minWidth="850.0"
-            fx:controller="agh.ics.oop.GUI.InputPresenter">
+            fx:controller="agh.ics.oop.GUI.Drawing.InputPresenter">
 
     <center>
         <GridPane alignment="center" hgap="10" vgap="10">
@@ -50,10 +50,13 @@
             <TextField fx:id="maxMutationsTextField"  text="10" GridPane.columnIndex="1" GridPane.rowIndex="12"/>
 
             <Label text="Mutation variant:" GridPane.rowIndex="13"/>
-            <CheckBox fx:id="mutationVariantButton" text="podmianka" GridPane.columnIndex="1" GridPane.rowIndex="13"/>
+            <CheckBox fx:id="mutationVariantButton" text="Podmianka" GridPane.columnIndex="1" GridPane.rowIndex="13"/>
 
             <Label text="Genome length:" GridPane.rowIndex="14"/>
             <TextField fx:id="genomeLengthTextField" text="3" GridPane.columnIndex="1" GridPane.rowIndex="14"/>
+
+            <Label text="Statistics to CSV exporter:" GridPane.rowIndex="15"/>
+            <CheckBox fx:id="exportCSV" text="Export" GridPane.columnIndex="1" GridPane.rowIndex="15"/>
 
         </GridPane>
     </center>

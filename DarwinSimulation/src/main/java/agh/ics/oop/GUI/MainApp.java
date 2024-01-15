@@ -1,5 +1,6 @@
 package agh.ics.oop.GUI;
 
+import agh.ics.oop.GUI.Drawing.InputPresenter;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;

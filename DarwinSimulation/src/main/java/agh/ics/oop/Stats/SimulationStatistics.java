@@ -1,10 +1,10 @@
 package agh.ics.oop.Stats;
 
-import agh.ics.oop.model.Animal;
-import agh.ics.oop.model.Genotype;
-import agh.ics.oop.model.Plant;
-import agh.ics.oop.model.WorldMap;
+import agh.ics.oop.Model.Animals.Animal;
+import agh.ics.oop.Model.Plants.Plant;
+import agh.ics.oop.Model.WorldMap;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -111,7 +111,17 @@ public class SimulationStatistics {
     }
 
     public List<Integer> getDominantGenotype() {
-
         return dominantGenotype;
+    }
+
+    public List<String> getStatisticsAsList() {
+        return Arrays.asList(
+                getCurrentDay(),
+                getTotalAnimals(),
+                getTotalPlants(),
+                getAverageEnergy(),
+                getAverageLifeSpanForDeadAnimals(),
+                getAverageNumberOfChildrenForLivingAnimals()
+        );
     }
 }
