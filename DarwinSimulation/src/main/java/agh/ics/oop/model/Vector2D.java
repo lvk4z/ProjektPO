@@ -1,4 +1,4 @@
-package agh.ics.oop.Model;
+package agh.ics.oop.model;
 
 import java.util.Objects;
 

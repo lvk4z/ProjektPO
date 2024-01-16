@@ -1,6 +1,6 @@
-package agh.ics.oop.Model.Animals;
+package agh.ics.oop.model.Animals;
 
-import agh.ics.oop.Model.Vector2D;
+import agh.ics.oop.model.Vector2D;
 
 public interface MoveValidator {
     Vector2D canMoveHorizontally(Vector2D position);

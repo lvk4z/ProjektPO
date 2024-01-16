@@ -1,6 +1,6 @@
-package agh.ics.oop.Model.Observers;
+package agh.ics.oop.model.Observers;
 
-import agh.ics.oop.Model.WorldMap;
+import agh.ics.oop.model.WorldMap;
 import agh.ics.oop.Stats.SimulationStatistics;
 
 public interface MapChangeListener {

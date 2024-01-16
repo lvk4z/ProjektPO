@@ -1,6 +1,6 @@
-package agh.ics.oop.Model;
+package agh.ics.oop.model;
 
-import agh.ics.oop.Model.Animals.Direction;
+import agh.ics.oop.model.Animals.Direction;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

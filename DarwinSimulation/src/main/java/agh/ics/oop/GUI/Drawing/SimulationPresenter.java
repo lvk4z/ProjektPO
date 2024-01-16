@@ -1,16 +1,16 @@
 package agh.ics.oop.GUI.Drawing;
 
 import agh.ics.oop.GUI.Simulation.Configurations;
-import agh.ics.oop.Model.Animals.Animal;
-import agh.ics.oop.Model.Animals.AnimalMap;
-import agh.ics.oop.Model.Observers.MapChangeListener;
-import agh.ics.oop.Model.Observers.GraveChangeListener;
-import agh.ics.oop.Model.Plants.EquatorPlantMap;
-import agh.ics.oop.Model.Plants.GravePlantMap;
-import agh.ics.oop.Model.Plants.PlantMap;
+import agh.ics.oop.model.Animals.Animal;
+import agh.ics.oop.model.Animals.AnimalMap;
+import agh.ics.oop.model.Observers.MapChangeListener;
+import agh.ics.oop.model.Observers.GraveChangeListener;
+import agh.ics.oop.model.Plants.EquatorPlantMap;
+import agh.ics.oop.model.Plants.GravePlantMap;
+import agh.ics.oop.model.Plants.PlantMap;
 import agh.ics.oop.Simulation;
 import agh.ics.oop.Stats.ChartDrawer;
-import agh.ics.oop.Model.*;
+import agh.ics.oop.model.*;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -116,7 +116,7 @@ public class SimulationPresenter implements MapChangeListener, TrackedAnimalList
                 animalStats();
             }
             else vBoxAnimalInformation.setVisible(false);
-            preferredGrassPositions = worldMap.getPreferredGrassPositions();
+            preferredGrassPositions = worldMap.getMapInfo().getPreferredGrassPositions();
             dominantGenotype = statistics.getDominantGenotype();
         });
     }
@@ -140,7 +140,7 @@ public class SimulationPresenter implements MapChangeListener, TrackedAnimalList
     @FXML
     public void handleGenotypeCheckBox() {
         if (dominantGenotype == null) return;
-        List<Animal> animals = simulation.getMap().getAllAnimals();
+        List<Animal> animals = simulation.getMap().getMapInfo().getAllAnimals();
 
         Platform.runLater(() -> {
             if (highLightCheckBox.isSelected()) {

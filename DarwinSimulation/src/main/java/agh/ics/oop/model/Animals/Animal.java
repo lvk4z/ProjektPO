@@ -1,6 +1,6 @@
-package agh.ics.oop.Model.Animals;
+package agh.ics.oop.model.Animals;
 
-import agh.ics.oop.Model.*;
+import agh.ics.oop.model.*;
 
 import java.util.List;
 import java.util.Random;

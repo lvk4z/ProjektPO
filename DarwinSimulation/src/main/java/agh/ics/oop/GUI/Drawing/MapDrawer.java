@@ -1,9 +1,9 @@
 package agh.ics.oop.GUI.Drawing;
 
-import agh.ics.oop.Model.*;
-import agh.ics.oop.Model.Animals.Animal;
-import agh.ics.oop.Model.Animals.Direction;
-import agh.ics.oop.Model.Plants.Plant;
+import agh.ics.oop.model.*;
+import agh.ics.oop.model.Animals.Animal;
+import agh.ics.oop.model.Animals.Direction;
+import agh.ics.oop.model.Plants.Plant;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
@@ -61,7 +61,7 @@ public class MapDrawer {
 
 
     private ImageView getCellImage(WorldMap worldMap, int x, int y) {
-        Object cellObject = worldMap.objectAt(new Vector2D(x, y));
+        Object cellObject = worldMap.getMapInfo().objectAt(new Vector2D(x, y));
 
 
         if (cellObject instanceof List<?> cellList) {

@@ -1,4 +1,4 @@
-package agh.ics.oop.Model.Animals;
+package agh.ics.oop.model.Animals;
 
 import java.util.ArrayList;
 import java.util.Collections;

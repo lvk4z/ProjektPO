@@ -1,7 +1,7 @@
-package agh.ics.oop.Model;
+package agh.ics.oop.model;
 
-import agh.ics.oop.Model.Plants.EquatorPlantMap;
-import agh.ics.oop.Model.Plants.PlantMap;
+import agh.ics.oop.model.Plants.EquatorPlantMap;
+import agh.ics.oop.model.Plants.PlantMap;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;

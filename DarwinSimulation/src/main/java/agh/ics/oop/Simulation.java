@@ -1,12 +1,12 @@
 package agh.ics.oop;
 
 import agh.ics.oop.GUI.Simulation.Configurations;
-import agh.ics.oop.Model.Animals.Animal;
-import agh.ics.oop.Model.Animals.Genotype;
-import agh.ics.oop.Model.Observers.MapChangeListener;
+import agh.ics.oop.model.Animals.Animal;
+import agh.ics.oop.model.Animals.Genotype;
+import agh.ics.oop.model.Observers.MapChangeListener;
 import agh.ics.oop.Stats.StatisticsExporter;
 import agh.ics.oop.Stats.SimulationStatistics;
-import agh.ics.oop.Model.*;
+import agh.ics.oop.model.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -75,7 +75,7 @@ public class Simulation implements Runnable {
             map.reproduction();
             map.plantGrass(config.getPlantsGrowingEachDay());
             //mapChangeListener.dayPassed(statistics);
-            animals = map.getAllAnimals();
+            animals = map.getMapInfo().getAllAnimals();
             steps++;
         }
         mapChangeListener.mapChanged(map,statistics);

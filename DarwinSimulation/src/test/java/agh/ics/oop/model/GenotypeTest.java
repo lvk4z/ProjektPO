@@ -1,6 +1,6 @@
-package agh.ics.oop.Model;
+package agh.ics.oop.model;
 
-import agh.ics.oop.Model.Animals.Genotype;
+import agh.ics.oop.model.Animals.Genotype;
 import org.junit.jupiter.api.Test;
 
 class GenotypeTest {

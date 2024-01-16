@@ -1,20 +1,22 @@
-package agh.ics.oop.Model;
+package agh.ics.oop.model;
 
-import agh.ics.oop.Model.Animals.Animal;
-import agh.ics.oop.Model.Animals.AnimalMap;
-import agh.ics.oop.Model.Plants.Plant;
-import agh.ics.oop.Model.Plants.PlantMap;
+import agh.ics.oop.model.Animals.Animal;
+import agh.ics.oop.model.Animals.AnimalMap;
+import agh.ics.oop.model.Plants.Plant;
+import agh.ics.oop.model.Plants.PlantMap;
 
 import java.util.List;
 
 public class WorldMap {
     private final PlantMap plantMap;
     private final AnimalMap animalMap;
+    private final MapInfo mapInfo;
     private int day = 0;
 
     public WorldMap(PlantMap planMap, AnimalMap animalMap) {
         this.plantMap = planMap;
         this.animalMap = animalMap;
+        mapInfo = new MapInfo(this.plantMap,this.animalMap);
     }
 
     public void removeDeadAnimals() {
@@ -44,33 +46,14 @@ public class WorldMap {
         }
     }
 
-
     public void plantGrass(int count) {
         plantMap.PlantGrass(count);
         day++;
-    }
-
-    public Object objectAt(Vector2D position) {
-        if (animalMap.isOccupied(position)) {
-            return animalMap.animalAt(position);
-        } else if (plantMap.isOccupied(position)) {
-            return plantMap.plantAt(position);
-        } else {
-            return null;
-        }
-    }
-
-    public List<Animal> getAllAnimals() {
-        return animalMap.getAllAnimals();
-    }
-
-    public List<Plant> getAllPlants() {
-        return plantMap.getAllPlants();
     }
 
     public int getDay() {
         return day;
     }
 
-    public List<Vector2D> getPreferredGrassPositions() {return plantMap.getPreferredPositionsList();}
+    public MapInfo getMapInfo() {return mapInfo;}
 }

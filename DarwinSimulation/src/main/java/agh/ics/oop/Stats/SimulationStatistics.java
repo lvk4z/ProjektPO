@@ -1,8 +1,8 @@
 package agh.ics.oop.Stats;
 
-import agh.ics.oop.Model.Animals.Animal;
-import agh.ics.oop.Model.Plants.Plant;
-import agh.ics.oop.Model.WorldMap;
+import agh.ics.oop.model.Animals.Animal;
+import agh.ics.oop.model.Plants.Plant;
+import agh.ics.oop.model.WorldMap;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -31,8 +31,8 @@ public class SimulationStatistics {
     }
 
     public void updateFromSimulation(WorldMap worldMap) {
-        List<Animal> animals = worldMap.getAllAnimals();
-        List<Plant> plants = worldMap.getAllPlants();
+        List<Animal> animals = worldMap.getMapInfo().getAllAnimals();
+        List<Plant> plants = worldMap.getMapInfo().getAllPlants();
 
         currentDay = worldMap.getDay();
         totalAnimals = animals.size();

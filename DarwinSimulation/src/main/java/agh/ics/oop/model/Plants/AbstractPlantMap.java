@@ -1,7 +1,7 @@
-package agh.ics.oop.Model.Plants;
+package agh.ics.oop.model.Plants;
 
-import agh.ics.oop.Model.Vector2D;
-import agh.ics.oop.Model.WorldElement;
+import agh.ics.oop.model.Vector2D;
+import agh.ics.oop.model.WorldElement;
 
 import java.util.*;
 

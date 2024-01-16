@@ -1,7 +1,7 @@
 package agh.ics.oop.GUI.Drawing;
 
-import agh.ics.oop.Model.Animals.Animal;
-import agh.ics.oop.Model.Vector2D;
+import agh.ics.oop.model.Animals.Animal;
+import agh.ics.oop.model.Vector2D;
 import javafx.scene.layout.StackPane;
 
 import java.util.List;
