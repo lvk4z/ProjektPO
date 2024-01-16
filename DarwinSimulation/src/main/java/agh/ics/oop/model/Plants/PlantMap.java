@@ -1,7 +1,9 @@
-package agh.ics.oop.model;
+package agh.ics.oop.model.Plants;
+
+import agh.ics.oop.model.Vector2D;
+import agh.ics.oop.model.WorldElement;
 
 import java.util.List;
-import java.util.Set;
 
 public interface PlantMap {
     void PlantGrass(int count);

@@ -1,5 +1,9 @@
 package agh.ics.oop.model;
 
+import agh.ics.oop.model.Animals.Animal;
+import agh.ics.oop.model.Animals.AnimalMap;
+import agh.ics.oop.model.Animals.Direction;
+import agh.ics.oop.model.Animals.Genotype;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -10,7 +14,7 @@ class AnimalMapTest {
     @Test
     void place() {
         AnimalMap map = new AnimalMap(4,4,0, 0, null);
-        Animal animal = new Animal(new Vector2D(0,0),null,0);
+        Animal animal = new Animal(new Vector2D(0,0),new Genotype(List.of(0),false,0,0),0);
         map.place(animal);
         List<Animal> animals = map.animalAt(animal.position());
         assertEquals(1, animals.size());
@@ -19,7 +23,7 @@ class AnimalMapTest {
     @Test
     void move() {
         AnimalMap map = new AnimalMap(4,4,0, 0, null);
-        Animal animal = new Animal(new Vector2D(0,0),List.of(0),0,Direction.NORTH);
+        Animal animal = new Animal(new Vector2D(0,0),new Genotype(List.of(0),false,0,0),0, Direction.NORTH);
         map.place(animal);
         map.move(animal);
         List<Animal> animals = map.animalAt(new Vector2D(0,1));
@@ -29,7 +33,7 @@ class AnimalMapTest {
     @Test
     void canReproduce() {
         AnimalMap map = new AnimalMap(4,4,50, 50, null);
-        Animal animal = new Animal(new Vector2D(0,0),null,49);
+        Animal animal = new Animal(new Vector2D(0,0),new Genotype(List.of(0),false,0,0),49);
         map.place(animal);
         assertFalse(map.canReproduce(animal));
     }
@@ -37,8 +41,8 @@ class AnimalMapTest {
     @Test
     void reproduce() {
         AnimalMap map = new AnimalMap(4,4,20, 20, null);
-        Animal parent1 = new Animal(new Vector2D(0,0),List.of(1,2,3,4),75);
-        Animal parent2 = new Animal(new Vector2D(0,0),List.of(4,3,2,1),25);
+        Animal parent1 = new Animal(new Vector2D(0,0),new Genotype(List.of(1,2,3,4),false,0,0),75);
+        Animal parent2 = new Animal(new Vector2D(0,0),new Genotype(List.of(4,3,2,1),false,0,0),25);
         map.place(parent1);
         map.place(parent2);
         List<Integer> genes = map.reproduce(parent1,parent2);
@@ -56,9 +60,9 @@ class AnimalMapTest {
     @Test
     void getAllAnimals() {
         AnimalMap map = new AnimalMap(4,4,0, 0, null);
-        Animal animal1 = new Animal(new Vector2D(0,0),null,0);
-        Animal animal2 = new Animal(new Vector2D(0,0),null,0);
-        Animal animal3 = new Animal(new Vector2D(1,0),null,0);
+        Animal animal1 = new Animal(new Vector2D(0,0),new Genotype(List.of(0),false,0,0),0);
+        Animal animal2 = new Animal(new Vector2D(0,0),new Genotype(List.of(0),false,0,0),0);
+        Animal animal3 = new Animal(new Vector2D(1,0),new Genotype(List.of(0),false,0,0),0);
         map.place(animal1);
         map.place(animal2);
         map.place(animal3);
@@ -69,9 +73,9 @@ class AnimalMapTest {
     @Test
     void removeDeadAnimals() {
         AnimalMap map = new AnimalMap(4,4,0, 0, null);
-        Animal animal1 = new Animal(new Vector2D(0,0),null,-1);
-        Animal animal2 = new Animal(new Vector2D(0,0),null,-1);
-        Animal animal3 = new Animal(new Vector2D(1,0),null,10);
+        Animal animal1 = new Animal(new Vector2D(0,0),new Genotype(List.of(0),false,0,0),-1);
+        Animal animal2 = new Animal(new Vector2D(0,0),new Genotype(List.of(0),false,0,0),-1);
+        Animal animal3 = new Animal(new Vector2D(1,0),new Genotype(List.of(0),false,0,0),10);
         map.place(animal1);
         map.place(animal2);
         map.place(animal3);

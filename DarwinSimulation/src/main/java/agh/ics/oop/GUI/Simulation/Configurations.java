@@ -1,4 +1,4 @@
-package agh.ics.oop.GUI;
+package agh.ics.oop.GUI.Simulation;
 
 import java.util.Map;
 
@@ -19,6 +19,7 @@ public class Configurations {
     private final String mutationVariant;
     private final int genomeLength;
 
+    private final String export;
     public Configurations(Map<String, String> configDetails) {
         this.mapWidth = Integer.parseInt(configDetails.get("Map's width"));
         this.mapHeight = Integer.parseInt(configDetails.get("Map's height"));
@@ -34,6 +35,7 @@ public class Configurations {
         this.maxMutations = Integer.parseInt(configDetails.get("Max number of mutations"));
         this.mutationVariant = configDetails.get("Mutation variant");
         this.genomeLength = Integer.parseInt(configDetails.get("Genome length"));
+        this.export = configDetails.get("Export");
     }
 
     public int getMapWidth() {
@@ -91,4 +93,6 @@ public class Configurations {
     public int getGenomeLength() {
         return genomeLength;
     }
+
+    public String getExport() {return export;}
 }

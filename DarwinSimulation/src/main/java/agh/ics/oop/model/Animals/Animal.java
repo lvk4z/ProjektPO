@@ -1,4 +1,6 @@
-package agh.ics.oop.model;
+package agh.ics.oop.model.Animals;
+
+import agh.ics.oop.model.*;
 
 import java.util.List;
 import java.util.Random;
@@ -8,7 +10,7 @@ public class Animal implements WorldElement {
 
     private Vector2D position;
     private Direction orientation;
-    private final List<Integer> genes;
+    private final Genotype genes;
     private int energy,lifetime,kids,grassEaten;
     private int deathDay, nextActiveGen;
 
@@ -19,40 +21,43 @@ public class Animal implements WorldElement {
         return values[rand.nextInt(8)];
     }
 
-    public Animal(Vector2D position, List<Integer> genes, int energy, Direction orientation) {
+    public Animal(Vector2D position, Genotype genes, int energy, Direction orientation) {
         this.position = position;
         this.orientation = orientation;
         this.genes = genes;
         this.energy = energy;
         lifetime=kids=grassEaten=deathDay=0;
-        nextActiveGen = genes.get(0);
+        nextActiveGen = genes.getGenes().get(0);
     }
 
-    public Animal(Vector2D position, List<Integer> genes, int energy){
+    public Animal(Vector2D position, Genotype genes, int energy){
         this(position, genes, energy, null);
         this.orientation = getRandomDirection();
     }
 
     public void move(MoveValidator validator){
-        if(!genes.isEmpty()) {
-            int rotation = lifetime % genes.size();
-            rotate(genes.get(rotation));
-            Vector2D moveVector = orientation.toUnitVector();
-            Vector2D horizontalValidator = validator.canMoveHorizontally(position.add(moveVector));
-            boolean verticalValidator = validator.canMoveVertically(position.add(moveVector));
+        if(!genes.getGenes().isEmpty()) {
+            int rotation = lifetime % genes.getGenes().size();
+            rotate(genes.getGenes().get(rotation));
+            moveBasedOnValidator(validator);
+            nextActiveGen=genes.getGenes().get((lifetime+1) % genes.getGenes().size());
+        }
+    }
 
-            if (horizontalValidator == null && verticalValidator) {
-                position = position.add(moveVector);
-            } else if (horizontalValidator != null && !verticalValidator) {
-                orientation = orientation.rotate(4);
-                position = new Vector2D(horizontalValidator.getX(), horizontalValidator.getY() - 1);
-            } else if (horizontalValidator != null) {
-                position = horizontalValidator;
-            } else {
-                orientation = orientation.rotate(4);
-            }
+    private void moveBasedOnValidator(MoveValidator validator) {
+        Vector2D moveVector = orientation.toUnitVector();
+        Vector2D horizontalValidator = validator.canMoveHorizontally(position.add(moveVector));
+        boolean verticalValidator = validator.canMoveVertically(position.add(moveVector));
 
-            nextActiveGen=genes.get((lifetime+1) % genes.size());
+        if (horizontalValidator == null && verticalValidator) {
+            position = position.add(moveVector);
+        } else if (horizontalValidator != null && !verticalValidator) {
+            orientation = orientation.rotate(4);
+            position = new Vector2D(horizontalValidator.getX(), horizontalValidator.getY() - 1);
+        } else if (horizontalValidator != null) {
+            position = horizontalValidator;
+        } else {
+            orientation = orientation.rotate(4);
         }
     }
 
@@ -85,7 +90,7 @@ public class Animal implements WorldElement {
     public void setDeathDay(int day) {deathDay=day;}
 
     public int getNextActiveGen() {return nextActiveGen;}
-    public List<Integer> getGenes() {return genes;}
+    public List<Integer> getGenes() {return genes.getGenes();}
 
     public int getLifetime() {return lifetime;}
 
@@ -96,4 +101,5 @@ public class Animal implements WorldElement {
         orientation = orientation.rotate(rotation);
     }
 
+    public Genotype getGenotype() {return genes;}
 }

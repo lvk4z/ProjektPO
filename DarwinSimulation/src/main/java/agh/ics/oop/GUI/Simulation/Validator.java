@@ -1,4 +1,6 @@
-package agh.ics.oop.GUI;
+package agh.ics.oop.GUI.Simulation;
+
+import agh.ics.oop.GUI.Simulation.ValidationException;
 
 public class Validator {
 

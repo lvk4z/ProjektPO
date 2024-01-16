@@ -1,11 +1,12 @@
-package agh.ics.oop.GUI;
+package agh.ics.oop.GUI.Drawing;
 
 import agh.ics.oop.model.*;
+import agh.ics.oop.model.Animals.Animal;
+import agh.ics.oop.model.Animals.Direction;
+import agh.ics.oop.model.Plants.Plant;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,7 +61,7 @@ public class MapDrawer {
 
 
     private ImageView getCellImage(WorldMap worldMap, int x, int y) {
-        Object cellObject = worldMap.objectAt(new Vector2D(x, y));
+        Object cellObject = worldMap.getMapInfo().objectAt(new Vector2D(x, y));
 
 
         if (cellObject instanceof List<?> cellList) {
@@ -98,7 +99,7 @@ public class MapDrawer {
     }
 
     public StackPane getMapCell(int x, int y) {
-        int index = y * mapWidth + x;
+        int index = (mapHeight - 1 - y) * mapWidth + x;
         if (index >= 0 && index < mapCells.size()) {
             return mapCells.get(index);
         }

@@ -1,6 +1,6 @@
-package agh.ics.oop.model;
+package agh.ics.oop.model.Animals;
 
-import java.util.Random;
+import agh.ics.oop.model.Vector2D;
 
 public enum Direction {
 

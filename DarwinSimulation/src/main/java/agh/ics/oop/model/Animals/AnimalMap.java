@@ -1,4 +1,7 @@
-package agh.ics.oop.model;
+package agh.ics.oop.model.Animals;
+
+import agh.ics.oop.model.Observers.GraveChangeListener;
+import agh.ics.oop.model.Vector2D;
 
 import java.util.*;
 
@@ -70,7 +73,9 @@ public class AnimalMap implements MoveValidator {
                     parent1.addKid();
                     parent2.loseEnergy(reproductionEnergy);
                     parent2.addKid();
-                    Animal baby = new Animal(position, newGenes, 2 * reproductionEnergy);
+                    Genotype genotype = parent1.getGenotype();
+                    Animal baby = new Animal(position, new Genotype(newGenes,genotype.getMutationOption(),genotype.getMinimalMutationNumber(),genotype.getMaximalMutationNumber()), 2 * reproductionEnergy);
+                    baby.getGenotype().mutate();
                     place(baby);
                 }
             }

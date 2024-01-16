@@ -1,6 +1,10 @@
 package agh.ics.oop;
 
-import agh.ics.oop.GUI.Configurations;
+import agh.ics.oop.GUI.Simulation.Configurations;
+import agh.ics.oop.model.Animals.Animal;
+import agh.ics.oop.model.Animals.Genotype;
+import agh.ics.oop.model.Observers.MapChangeListener;
+import agh.ics.oop.Stats.StatisticsExporter;
 import agh.ics.oop.Stats.SimulationStatistics;
 import agh.ics.oop.model.*;
 
@@ -17,6 +21,9 @@ public class Simulation implements Runnable {
     int steps = 0;
 
     private volatile boolean isRunning = true;
+    private boolean mutation = false;
+
+    StatisticsExporter exporter;
 
     private final Random random = new Random();
 
@@ -27,10 +34,12 @@ public class Simulation implements Runnable {
         this.mapChangeListener = mapChangeListener;
         map.plantGrass(config.getInitialPlants());
         List<Vector2D> positions = generatePositions(config.getInitialAnimals());
+        if(config.getExport().equals("Export")) exporter = new StatisticsExporter(statistics);
+        if(config.getMutationVariant().equals("Swap")) mutation = true;
         for(int i=0;i<config.getInitialAnimals();i++){
-            List<Integer> gen = generateGenotype(config.getGenomeLength());
             Vector2D position = positions.get(i);
-            Animal animal = new Animal(position, gen, config.getInitialAnimalsEnergy());
+            Genotype genotype = new Genotype(config.getGenomeLength(),mutation,config.getMinMutations(),config.getMaxMutations());
+            Animal animal = new Animal(position, genotype, config.getInitialAnimalsEnergy());
             animals.add(animal);
             map.place(animal);
         }
@@ -38,8 +47,7 @@ public class Simulation implements Runnable {
 
     @Override
     public void run() {
-        while (steps<300){
-
+        while (true){
             if (!isRunning) {
                 try {
                     Thread.sleep(100);
@@ -50,9 +58,12 @@ public class Simulation implements Runnable {
             }
             statistics.updateFromSimulation(map);
             map.removeDeadAnimals();
+            if(exporter != null) exporter.updateStatistics();
+            if(animals.isEmpty())break;
             for (Animal animal : animals) {
                 map.move(animal);
                 mapChangeListener.mapChanged(map,statistics);
+                animal.loseEnergy(10);
                 try {
                     Thread.sleep(50);
                 } catch (InterruptedException e) {
@@ -61,18 +72,16 @@ public class Simulation implements Runnable {
             }
 
             map.eating();
-
             map.reproduction();
-
             map.plantGrass(config.getPlantsGrowingEachDay());
-
             //mapChangeListener.dayPassed(statistics);
-
-            animals = map.getAllAnimals();
-
+            animals = map.getMapInfo().getAllAnimals();
             steps++;
         }
+        mapChangeListener.mapChanged(map,statistics);
+        if(exporter != null)exporter.exportToCSV();
     }
+
 
     private List<Vector2D> generatePositions(int numberOfAnimals) {
         List<Vector2D> positions = new ArrayList<>();
@@ -82,17 +91,6 @@ public class Simulation implements Runnable {
             positions.add(new Vector2D(X,Y));
         }
         return positions;
-    }
-
-
-
-    private List<Integer> generateGenotype(int length) {
-        List<Integer> genes = new ArrayList<>();
-        for(int i=0;i<length;i++){
-            int genotype = random.nextInt(8);
-            genes.add(genotype);
-        }
-        return genes;
     }
 
     public void stopSimulation() {

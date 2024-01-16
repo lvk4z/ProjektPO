@@ -1,6 +1,13 @@
-package agh.ics.oop.GUI;
+package agh.ics.oop.GUI.Drawing;
 
-import agh.ics.oop.model.MapChangeListener;
+import agh.ics.oop.GUI.Simulation.Configurations;
+import agh.ics.oop.model.Animals.Animal;
+import agh.ics.oop.model.Animals.AnimalMap;
+import agh.ics.oop.model.Observers.MapChangeListener;
+import agh.ics.oop.model.Observers.GraveChangeListener;
+import agh.ics.oop.model.Plants.EquatorPlantMap;
+import agh.ics.oop.model.Plants.GravePlantMap;
+import agh.ics.oop.model.Plants.PlantMap;
 import agh.ics.oop.Simulation;
 import agh.ics.oop.Stats.ChartDrawer;
 import agh.ics.oop.model.*;
@@ -10,7 +17,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
 import java.util.List;
@@ -20,7 +26,7 @@ import agh.ics.oop.Stats.SimulationStatistics;
 
 import javafx.scene.text.Text;
 
-public class SimulationPresenter implements MapChangeListener, TrackedAnimalListener{
+public class SimulationPresenter implements MapChangeListener, TrackedAnimalListener {
     @FXML
     private GridPane mapGrid;
     @FXML
@@ -67,6 +73,7 @@ public class SimulationPresenter implements MapChangeListener, TrackedAnimalList
     private Simulation simulation;
     private ChartDrawer chartDrawer;
     private MapDrawer mapDrawer;
+    private Highlighting highlighting;
     private Animal trackedAnimal = null;
     private List<Vector2D> preferredGrassPositions = null;
     private List<Integer> dominantGenotype = null;
@@ -76,11 +83,11 @@ public class SimulationPresenter implements MapChangeListener, TrackedAnimalList
         PlantMap plantMap;
         GraveChangeListener graveChangeListener;
         if (Objects.equals(config.getPlantDevelopmentOption(), "Normal")) {
-            plantMap = new EquatorPlantMap(config.getMapHeight(), config.getMapWidth(), config.getSinglePlantEnergy());
+            plantMap = new EquatorPlantMap(config.getMapWidth(), config.getMapHeight(), config.getSinglePlantEnergy());
             graveChangeListener = null;
             preferredGrassPositions = plantMap.getPreferredPositionsList();
         } else {
-            plantMap = new GravePlantMap(config.getMapHeight(), config.getMapWidth(), config.getSinglePlantEnergy());
+            plantMap = new GravePlantMap(config.getMapWidth(), config.getMapHeight(), config.getSinglePlantEnergy());
             graveChangeListener = (GraveChangeListener) plantMap;
         }
         AnimalMap animalMap = new AnimalMap(config.getMapHeight(), config.getMapWidth(), config.getEnergyToBreed(), config.getEnergyUsedForReproduction(), graveChangeListener);
@@ -93,6 +100,7 @@ public class SimulationPresenter implements MapChangeListener, TrackedAnimalList
         highLightCheckBox.setDisable(true);
 
         this.mapDrawer = new MapDrawer(config.getMapWidth(), config.getMapHeight(), this);
+        this.highlighting = new Highlighting(this.mapDrawer);
 
 //        chartDrawer = new ChartDrawer();
 //        VBox chartContainer = chartDrawer.getChartContainer();
@@ -108,7 +116,7 @@ public class SimulationPresenter implements MapChangeListener, TrackedAnimalList
                 animalStats();
             }
             else vBoxAnimalInformation.setVisible(false);
-            preferredGrassPositions = worldMap.getPreferredGrassPositions();
+            preferredGrassPositions = worldMap.getMapInfo().getPreferredGrassPositions();
             dominantGenotype = statistics.getDominantGenotype();
         });
     }
@@ -119,26 +127,55 @@ public class SimulationPresenter implements MapChangeListener, TrackedAnimalList
 //            chartDrawer.updateChartData(Integer.parseInt(statistics.getCurrentDay()), Integer.parseInt(statistics.getTotalAnimals()), Integer.parseInt(statistics.getTotalPlants()));
         });
     }
-
     @FXML
     public void handleGrassCheckBox() {
         Platform.runLater(() -> {
             if (grassCheckBox.isSelected()) {
-                for (Vector2D position : preferredGrassPositions) {
-                    StackPane cell = mapDrawer.getMapCell(position.getX(), position.getY());
-                    if (cell != null) {
-                        cell.setStyle("-fx-border-width: 1px; -fx-border-color: green;");
-                    }
-                }
+                highlighting.highlightPreferredGrassPositions(preferredGrassPositions);
             } else {
-                for (Vector2D position : preferredGrassPositions) {
-                    StackPane cell = mapDrawer.getMapCell(position.getX(), position.getY());
-                    if (cell != null) {
-                        cell.setStyle("-fx-border-width: 1px; -fx-border-color: transparent;");
-                    }
-                }
+                highlighting.unHighlightPreferredGrassPositions(preferredGrassPositions);
             }
         });
+    }
+    @FXML
+    public void handleGenotypeCheckBox() {
+        if (dominantGenotype == null) return;
+        List<Animal> animals = simulation.getMap().getMapInfo().getAllAnimals();
+
+        Platform.runLater(() -> {
+            if (highLightCheckBox.isSelected()) {
+                highlighting.highlightDominantGenotype(animals,dominantGenotype);
+            }else{
+                highlighting.unHighlightDominantGenotype(animals,dominantGenotype);
+            }
+        });
+    }
+    @FXML
+    public void stopSimulation() {
+        simulation.stopSimulation();
+        stopButton.setText("Resume");
+        grassCheckBox.setDisable(false);
+        highLightCheckBox.setDisable(false);
+        stopButton.setOnAction(e -> resumeSimulation());
+        clearAnimalStats();
+    }
+
+    @FXML
+    public void resumeSimulation() {
+        simulation.resumeSimulation();
+        stopButton.setText("Stop");
+        grassCheckBox.setSelected(false);
+        grassCheckBox.setDisable(true);
+        highLightCheckBox.setSelected(false);
+        highLightCheckBox.setDisable(true);
+        stopButton.setOnAction(e -> stopSimulation());
+    }
+
+    @Override
+    public void onAnimalClicked(Animal animal) {
+        trackedAnimal = animal;
+        vBoxAnimalInformation.setVisible(true);
+        animalStats();
     }
     public void updateStatistics(SimulationStatistics statistics) {
         sDay.setText(statistics.getCurrentDay());
@@ -173,58 +210,5 @@ public class SimulationPresenter implements MapChangeListener, TrackedAnimalList
         kidsNumberText.setText("");
         daysAliveText.setText("");
     }
-    @FXML
-    public void stopSimulation() {
-        simulation.stopSimulation();
-        stopButton.setText("Resume");
-        grassCheckBox.setDisable(false);
-        highLightCheckBox.setDisable(false);
-        stopButton.setOnAction(e -> resumeSimulation());
-        clearAnimalStats();
-    }
 
-    @FXML
-    public void resumeSimulation() {
-        simulation.resumeSimulation();
-        stopButton.setText("Stop");
-        grassCheckBox.setSelected(false);
-        grassCheckBox.setDisable(true);
-        highLightCheckBox.setSelected(false);
-        highLightCheckBox.setDisable(true);
-        stopButton.setOnAction(e -> stopSimulation());
-    }
-    @FXML
-    public void highlightDominantGenotype() {
-        if (dominantGenotype == null) return;
-        List<Animal> animals = simulation.getMap().getAllAnimals();
-
-        Platform.runLater(() -> {
-            if (highLightCheckBox.isSelected()) {
-                for (Animal animal : animals) {
-                    if (animal.getGenes().equals(dominantGenotype)) {
-                        StackPane cell = mapDrawer.getMapCell(animal.position().getX(), animal.position().getY());
-                        if (cell != null) {
-                            mapDrawer.highlightCell(cell, animal);
-                        }
-                    }
-                }
-            }else{
-                for (Animal animal : animals) {
-                    if (animal.getGenes().equals(dominantGenotype)) {
-                        StackPane cell = mapDrawer.getMapCell(animal.position().getX(), animal.position().getY());
-                        if (cell != null) {
-                            mapDrawer.unHighlightCell(cell, animal);
-                        }
-                    }
-                }
-            }
-        });
-    }
-
-    @Override
-    public void onAnimalClicked(Animal animal) {
-        trackedAnimal = animal;
-        vBoxAnimalInformation.setVisible(true);
-        animalStats();
-    }
 }

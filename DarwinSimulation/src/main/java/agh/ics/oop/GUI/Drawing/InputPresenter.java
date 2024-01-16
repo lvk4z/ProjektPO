@@ -1,6 +1,9 @@
-package agh.ics.oop.GUI;
+package agh.ics.oop.GUI.Drawing;
 
 
+import agh.ics.oop.GUI.Simulation.Configurations;
+import agh.ics.oop.GUI.Simulation.ValidationException;
+import agh.ics.oop.GUI.Simulation.Validator;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 
@@ -56,10 +59,11 @@ public class InputPresenter {
 
     @FXML
     private TextField genomeLengthTextField;
+    @FXML
+    private CheckBox exportCSV;
 
 
-
-    private Map<String, String> getConfigurationDetails() throws ValidationException{
+    private Map<String, String> getConfigurationDetails() throws ValidationException {
         Map<String, String> configDetails = new HashMap<>();
 
         int mapWidth = Integer.parseInt(widthTextField.getText());
@@ -106,11 +110,13 @@ public class InputPresenter {
         configDetails.put("Min number of mutations", minMutationsTextField.getText());
         configDetails.put("Max number of mutations", maxMutationsTextField.getText());
 
-        configDetails.put("Mutation variant", mutationVariantButton.isSelected() ? "Podmianka" : "Normal");
+        configDetails.put("Mutation variant", mutationVariantButton.isSelected() ? "Swap" : "Normal");
 
         int genomeLength = Integer.parseInt(genomeLengthTextField.getText());
         Validator.validateGenomeLength(genomeLength);
         configDetails.put("Genome length", genomeLengthTextField.getText());
+
+        configDetails.put("Export", exportCSV.isSelected() ? "Export" : "NotExport");
 
         return configDetails;
     }
