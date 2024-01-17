@@ -11,8 +11,9 @@ public class Animal implements WorldElement {
     private Vector2D position;
     private Direction orientation;
     private final Genotype genes;
-    private int energy,lifetime,kids,grassEaten;
+    private int energy,lifetime,kids,grassEaten,progeny;
     private int deathDay, nextActiveGen;
+    private final Animal parent1,parent2;
 
     Random rand = new Random();
 
@@ -21,17 +22,19 @@ public class Animal implements WorldElement {
         return values[rand.nextInt(8)];
     }
 
-    public Animal(Vector2D position, Genotype genes, int energy, Direction orientation) {
+    public Animal(Vector2D position, Genotype genes, int energy, Direction orientation, Animal parent1, Animal parent2) {
         this.position = position;
         this.orientation = orientation;
         this.genes = genes;
         this.energy = energy;
-        lifetime=kids=grassEaten=deathDay=0;
+        this.parent1 = parent1;
+        this.parent2 = parent2;
+        lifetime=kids=grassEaten=deathDay=progeny=0;
         nextActiveGen = genes.getGenes().get(0);
     }
 
-    public Animal(Vector2D position, Genotype genes, int energy){
-        this(position, genes, energy, null);
+    public Animal(Vector2D position, Genotype genes, int energy, Animal parent1, Animal parent2){
+        this(position, genes, energy, null, parent1, parent2);
         this.orientation = getRandomDirection();
     }
 
@@ -102,4 +105,16 @@ public class Animal implements WorldElement {
     }
 
     public Genotype getGenotype() {return genes;}
+
+    public Animal getParent1() {
+        return parent1;
+    }
+
+    public Animal getParent2() {
+        return parent2;
+    }
+
+    public void addProgeny() {progeny++;}
+
+    public int getProgeny() {return progeny;}
 }

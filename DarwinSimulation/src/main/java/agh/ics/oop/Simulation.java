@@ -39,7 +39,7 @@ public class Simulation implements Runnable {
         for(int i=0;i<config.getInitialAnimals();i++){
             Vector2D position = positions.get(i);
             Genotype genotype = new Genotype(config.getGenomeLength(),mutation,config.getMinMutations(),config.getMaxMutations());
-            Animal animal = new Animal(position, genotype, config.getInitialAnimalsEnergy());
+            Animal animal = new Animal(position, genotype, config.getInitialAnimalsEnergy(), null, null);
             animals.add(animal);
             map.place(animal);
         }

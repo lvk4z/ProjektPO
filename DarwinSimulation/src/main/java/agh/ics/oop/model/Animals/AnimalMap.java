@@ -74,9 +74,10 @@ public class AnimalMap implements MoveValidator {
                     parent2.loseEnergy(reproductionEnergy);
                     parent2.addKid();
                     Genotype genotype = parent1.getGenotype();
-                    Animal baby = new Animal(position, new Genotype(newGenes,genotype.getMutationOption(),genotype.getMinimalMutationNumber(),genotype.getMaximalMutationNumber()), 2 * reproductionEnergy);
+                    Animal baby = new Animal(position, new Genotype(newGenes,genotype.getMutationOption(),genotype.getMinimalMutationNumber(),genotype.getMaximalMutationNumber()), 2 * reproductionEnergy, parent1, parent2);
+//                    addProgeny(baby);
                     baby.getGenotype().mutate();
-                    place(baby);
+                    this.place(baby);
                 }
             }
         }
@@ -97,6 +98,18 @@ public class AnimalMap implements MoveValidator {
         }
         return newGenes;
     }
+
+    public void addProgeny(Animal animal){
+        Animal parent1 = animal.getParent1();
+        Animal parent2 = animal.getParent2();
+        if(parent1 != null && parent2 != null) {
+            parent1.addProgeny();
+            parent2.addProgeny();
+            addProgeny(parent1);
+            addProgeny(parent2);
+        }
+    }
+
 
     @Override
     public Vector2D canMoveHorizontally(Vector2D position) {
@@ -127,9 +140,9 @@ public class AnimalMap implements MoveValidator {
         List<Animal> allAnimals = getAllAnimals();
         for (Animal animal : allAnimals) {
             if (animal.energy() <= 0) {
+                animal.setDeathDay(dayNumber);
                 List<Animal> animalsAtPosition = animals.get(animal.position());
                 animalsAtPosition.remove(animal);
-                animal.setDeathDay(dayNumber);
                 if(changeListener != null)changeListener.addDeadBody(animal.position());
                 if (animalsAtPosition.isEmpty()) animals.remove(animal.position());
             }
