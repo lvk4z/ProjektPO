@@ -5,5 +5,4 @@ import agh.ics.oop.Stats.SimulationStatistics;
 
 public interface MapChangeListener {
     void mapChanged(WorldMap worldMap, SimulationStatistics statistics);
-    void dayPassed(SimulationStatistics statistics);
 }

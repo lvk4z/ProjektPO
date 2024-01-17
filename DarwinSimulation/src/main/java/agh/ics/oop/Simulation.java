@@ -34,11 +34,11 @@ public class Simulation implements Runnable {
         this.mapChangeListener = mapChangeListener;
         map.plantGrass(config.getInitialPlants());
         List<Vector2D> positions = generatePositions(config.getInitialAnimals());
-        if(config.getExport().equals("Export")) exporter = new StatisticsExporter(statistics);
-        if(config.getMutationVariant().equals("Swap")) mutation = true;
-        for(int i=0;i<config.getInitialAnimals();i++){
+        if (config.getExport().equals("Export")) exporter = new StatisticsExporter(statistics);
+        if (config.getMutationVariant().equals("Swap")) mutation = true;
+        for (int i = 0; i < config.getInitialAnimals(); i++) {
             Vector2D position = positions.get(i);
-            Genotype genotype = new Genotype(config.getGenomeLength(),mutation,config.getMinMutations(),config.getMaxMutations());
+            Genotype genotype = new Genotype(config.getGenomeLength(), mutation, config.getMinMutations(), config.getMaxMutations());
             Animal animal = new Animal(position, genotype, config.getInitialAnimalsEnergy(), null, null);
             animals.add(animal);
             map.place(animal);
@@ -47,7 +47,7 @@ public class Simulation implements Runnable {
 
     @Override
     public void run() {
-        while (true){
+        while (true) {
             if (!isRunning) {
                 try {
                     Thread.sleep(100);
@@ -58,11 +58,11 @@ public class Simulation implements Runnable {
             }
             statistics.updateFromSimulation(map);
             map.removeDeadAnimals();
-            if(exporter != null) exporter.updateStatistics();
-            if(animals.isEmpty())break;
+            if (exporter != null) exporter.updateStatistics();
+            if (animals.isEmpty()) break;
             for (Animal animal : animals) {
                 map.move(animal);
-                mapChangeListener.mapChanged(map,statistics);
+                mapChangeListener.mapChanged(map, statistics);
                 animal.loseEnergy(10);
                 try {
                     Thread.sleep(50);
@@ -74,21 +74,20 @@ public class Simulation implements Runnable {
             map.eating();
             map.reproduction();
             map.plantGrass(config.getPlantsGrowingEachDay());
-            //mapChangeListener.dayPassed(statistics);
             animals = map.getMapInfo().getAllAnimals();
             steps++;
         }
-        mapChangeListener.mapChanged(map,statistics);
-        if(exporter != null)exporter.exportToCSV();
+        mapChangeListener.mapChanged(map, statistics);
+        if (exporter != null) exporter.exportToCSV();
     }
 
 
     private List<Vector2D> generatePositions(int numberOfAnimals) {
         List<Vector2D> positions = new ArrayList<>();
-        for(int i=0;i<numberOfAnimals;i++){
+        for (int i = 0; i < numberOfAnimals; i++) {
             int X = random.nextInt(config.getMapWidth());
             int Y = random.nextInt(config.getMapHeight());
-            positions.add(new Vector2D(X,Y));
+            positions.add(new Vector2D(X, Y));
         }
         return positions;
     }

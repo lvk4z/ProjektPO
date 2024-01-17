@@ -43,7 +43,7 @@ public class StatisticsExporter {
 
     }
 
-    public void updateStatistics(){
+    public void updateStatistics() {
         data.add(statistics.getStatisticsAsList());
     }
 

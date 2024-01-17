@@ -10,87 +10,125 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.layout.HBox?>
 <BorderPane minHeight="550.0" minWidth="850.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="agh.ics.oop.GUI.Drawing.InputPresenter">
 
     <center>
-        <GridPane alignment="center" hgap="10" vgap="10">
-            <Label text="Map's width:" GridPane.rowIndex="1" />
-            <TextField fx:id="widthTextField" text="30" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+        <StackPane>
+            <ImageView fitWidth="900" fitHeight="600" preserveRatio="false">
+                <image>
 
-            <Label text="Map's height:" GridPane.rowIndex="2" />
-            <TextField fx:id="heightTextField" text="30" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                    <Image url="/Images/background.png" />
+                </image>
+            </ImageView>
+            <ImageView fitWidth="500" fitHeight="550" preserveRatio="false">
+                <image>
 
-            <Label text="Initial Number of Plants:" GridPane.rowIndex="3" />
-            <TextField fx:id="initialPlantsTextField" text="10" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                    <Image url="/Images/blank.png" />
+                </image>
+            </ImageView>
+            <GridPane alignment="center" hgap="10" vgap="10">
+                <Label text="Map's width:" GridPane.rowIndex="1" />
+                <TextField fx:id="widthTextField" text=" " GridPane.columnIndex="1" GridPane.rowIndex="1" />
 
-            <Label text="Single plant energy:" GridPane.rowIndex="4" />
-            <TextField fx:id="plantEnergyTextField" text="30" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                <Label text="Map's height:" GridPane.rowIndex="2" />
+                <TextField fx:id="heightTextField" text=" " GridPane.columnIndex="1" GridPane.rowIndex="2" />
 
-            <Label text="Number of plants growing each day:" GridPane.rowIndex="5" />
-            <TextField fx:id="numberOfPlantsGrowingTextField" text="3" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                <Label text="Initial Number of Plants:" GridPane.rowIndex="3" />
+                <TextField fx:id="initialPlantsTextField" text=" " GridPane.columnIndex="1" GridPane.rowIndex="3" />
 
-            <Label text="Plant Development Option:" GridPane.rowIndex="6" />
-            <CheckBox fx:id="corpsesPlantGrowthButton" text="Life-giving corpses" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                <Label text="Single plant energy:" GridPane.rowIndex="4" />
+                <TextField fx:id="plantEnergyTextField" text=" " GridPane.columnIndex="1" GridPane.rowIndex="4" />
 
-            <Label text="Initial Number of Animals:" GridPane.rowIndex="7" />
-            <TextField fx:id="initialAnimalsTextField" text="20" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                <Label text="Number of plants growing each day:" GridPane.rowIndex="5" />
+                <TextField fx:id="numberOfPlantsGrowingTextField" text=" " GridPane.columnIndex="1" GridPane.rowIndex="5" />
 
-            <Label text="Initial animals' energy:" GridPane.rowIndex="8" />
-            <TextField fx:id="initialAnimalEnergyTextField" text="100" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                <Label text="Plant Development Option:" GridPane.rowIndex="6" />
+                <CheckBox fx:id="corpsesPlantGrowthButton" text="Life-giving corpses" GridPane.columnIndex="1" GridPane.rowIndex="6" />
 
-            <Label text="Energy to consider the animal as full and ready to breed:" GridPane.rowIndex="9" />
-            <TextField fx:id="requiredEnergyToBreedTextField" text="50" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+                <Label text="Initial Number of Animals:" GridPane.rowIndex="7" />
+                <TextField fx:id="initialAnimalsTextField" text=" " GridPane.columnIndex="1" GridPane.rowIndex="7" />
 
-            <Label text="Energy used for reproduction:" GridPane.rowIndex="10" />
-            <TextField fx:id="energyLostToBreedTextField" text="20" GridPane.columnIndex="1" GridPane.rowIndex="10" />
+                <Label text="Initial animals' energy:" GridPane.rowIndex="8" />
+                <TextField fx:id="initialAnimalEnergyTextField" text=" " GridPane.columnIndex="1" GridPane.rowIndex="8" />
 
-            <Label text="Min number of mutations:" GridPane.rowIndex="11" />
-            <TextField fx:id="minMutationsTextField" text="10" GridPane.columnIndex="1" GridPane.rowIndex="11" />
+                <Label text="Energy to consider the animal as full and ready to breed:" GridPane.rowIndex="9" />
+                <TextField fx:id="requiredEnergyToBreedTextField" text=" " GridPane.columnIndex="1" GridPane.rowIndex="9" />
 
-            <Label text="Max number of mutations:" GridPane.rowIndex="12" />
-            <TextField fx:id="maxMutationsTextField" text="10" GridPane.columnIndex="1" GridPane.rowIndex="12" />
+                <Label text="Energy used for reproduction:" GridPane.rowIndex="10" />
+                <TextField fx:id="energyLostToBreedTextField" text=" " GridPane.columnIndex="1" GridPane.rowIndex="10" />
 
-            <Label text="Mutation variant:" GridPane.rowIndex="13" />
-            <CheckBox fx:id="mutationVariantButton" text="Podmianka" GridPane.columnIndex="1" GridPane.rowIndex="13" />
+                <Label text="Min number of mutations:" GridPane.rowIndex="11" />
+                <TextField fx:id="minMutationsTextField" text=" " GridPane.columnIndex="1" GridPane.rowIndex="11" />
 
-            <Label text="Genome length:" GridPane.rowIndex="14" />
-            <TextField fx:id="genomeLengthTextField" text="3" GridPane.columnIndex="1" GridPane.rowIndex="14" />
+                <Label text="Max number of mutations:" GridPane.rowIndex="12" />
+                <TextField fx:id="maxMutationsTextField" text=" " GridPane.columnIndex="1" GridPane.rowIndex="12" />
 
-            <Label text="Statistics to CSV exporter:" GridPane.rowIndex="15" />
-            <CheckBox fx:id="exportCSV" text="Export" GridPane.columnIndex="1" GridPane.rowIndex="15" />
-         <columnConstraints>
-            <ColumnConstraints />
-            <ColumnConstraints />
-         </columnConstraints>
-         <rowConstraints>
-            <RowConstraints />
-            <RowConstraints />
-            <RowConstraints />
-            <RowConstraints />
-            <RowConstraints />
-            <RowConstraints />
-            <RowConstraints />
-            <RowConstraints />
-            <RowConstraints />
-            <RowConstraints />
-            <RowConstraints />
-            <RowConstraints />
-            <RowConstraints />
-            <RowConstraints />
-            <RowConstraints />
-            <RowConstraints />
-         </rowConstraints>
+                <Label text="Mutation variant:" GridPane.rowIndex="13" />
+                <CheckBox fx:id="mutationVariantButton" text="Podmianka" GridPane.columnIndex="1" GridPane.rowIndex="13" />
 
-        </GridPane>
+                <Label text="Genome length:" GridPane.rowIndex="14" />
+                <TextField fx:id="genomeLengthTextField" text=" " GridPane.columnIndex="1" GridPane.rowIndex="14" />
+
+                <Label text="Statistics to CSV exporter:" GridPane.rowIndex="15" />
+                <CheckBox fx:id="exportCSV" text="Export" GridPane.columnIndex="1" GridPane.rowIndex="15" />
+                <columnConstraints>
+                    <ColumnConstraints />
+                    <ColumnConstraints />
+                </columnConstraints>
+                <rowConstraints>
+                    <RowConstraints />
+                    <RowConstraints />
+                    <RowConstraints />
+                    <RowConstraints />
+                    <RowConstraints />
+                    <RowConstraints />
+                    <RowConstraints />
+                    <RowConstraints />
+                    <RowConstraints />
+                    <RowConstraints />
+                    <RowConstraints />
+                    <RowConstraints />
+                    <RowConstraints />
+                    <RowConstraints />
+                    <RowConstraints />
+                    <RowConstraints />
+                </rowConstraints>
+
+
+            </GridPane>
+        </StackPane>
     </center>
 
     <bottom>
-        <Button onAction="#onSimulationStartClicked" prefHeight="35.0" prefWidth="100.0" text="Start" BorderPane.alignment="CENTER">
-         <BorderPane.margin>
-            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-         </BorderPane.margin>
-         <padding>
-            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-         </padding></Button>
+        <HBox alignment="CENTER" spacing="20">
+            <Button onAction="#onSimulationStartClicked" text="Start" prefHeight="35.0" prefWidth="100.0">
+                <padding>
+                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                </padding>
+                <BorderPane.margin>
+                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                </BorderPane.margin>
+            </Button>
+            <Button fx:id="testButton1" onAction="#onTest1Clicked" text="test #1" prefHeight="35.0" prefWidth="100.0">
+                <padding>
+                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                </padding>
+                <BorderPane.margin>
+                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                </BorderPane.margin>
+            </Button>
+            <Button fx:id="testButton2" onAction="#onTest2Clicked" text="test #2" prefHeight="35.0" prefWidth="100.0">
+                <padding>
+                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                </padding>
+                <BorderPane.margin>
+                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                </BorderPane.margin>
+            </Button>
+        </HBox>
     </bottom>
 </BorderPane>
