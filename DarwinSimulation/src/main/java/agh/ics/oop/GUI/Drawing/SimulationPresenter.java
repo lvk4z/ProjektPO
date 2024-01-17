@@ -64,6 +64,8 @@ public class SimulationPresenter implements MapChangeListener, TrackedAnimalList
     @FXML
     private Label statusLabel;
     @FXML
+    private Text progenyNumberText;
+    @FXML
     private VBox chartBox;
 
     @FXML
@@ -193,11 +195,15 @@ public class SimulationPresenter implements MapChangeListener, TrackedAnimalList
         energyText.setText(String.valueOf(trackedAnimal.energy()));
         grassEatenText.setText(String.valueOf(trackedAnimal.getGrassEaten()));
         kidsNumberText.setText(String.valueOf(trackedAnimal.getKidsNumber()));
+        progenyNumberText.setText(String.valueOf(trackedAnimal.getProgeny()));
         if(!trackedAnimal.isStillAlive()){
             statusLabel.setText("Died at day: ");
             daysAliveText.setText(String.valueOf(trackedAnimal.getDeathDay()));
         }
-        else{daysAliveText.setText(String.valueOf(trackedAnimal.getLifetime()));}
+        else{
+            statusLabel.setText("Days alive: ");
+            daysAliveText.setText(String.valueOf(trackedAnimal.getLifetime()));
+        }
     }
 
     private void clearAnimalStats() {
@@ -208,6 +214,7 @@ public class SimulationPresenter implements MapChangeListener, TrackedAnimalList
         nextGenText.setText("");
         grassEatenText.setText("");
         kidsNumberText.setText("");
+        progenyNumberText.setText("");
         daysAliveText.setText("");
     }
 

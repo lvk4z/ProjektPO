@@ -35,4 +35,6 @@ public class MapInfo {
     }
 
     public List<Vector2D> getPreferredGrassPositions() {return plantMap.getPreferredPositionsList();}
+
+    public int getDay() {return animalMap.getDay();}
 }

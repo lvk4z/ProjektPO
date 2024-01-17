@@ -34,7 +34,7 @@ public class SimulationStatistics {
         List<Animal> animals = worldMap.getMapInfo().getAllAnimals();
         List<Plant> plants = worldMap.getMapInfo().getAllPlants();
 
-        currentDay = worldMap.getDay();
+        currentDay = worldMap.getMapInfo().getDay();
         totalAnimals = animals.size();
         totalPlants = plants.size();
         averageEnergy = calculateAverageEnergy(animals);

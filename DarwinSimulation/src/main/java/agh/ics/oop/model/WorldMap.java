@@ -11,7 +11,6 @@ public class WorldMap {
     private final PlantMap plantMap;
     private final AnimalMap animalMap;
     private final MapInfo mapInfo;
-    private int day = 0;
 
     public WorldMap(PlantMap planMap, AnimalMap animalMap) {
         this.plantMap = planMap;
@@ -48,11 +47,7 @@ public class WorldMap {
 
     public void plantGrass(int count) {
         plantMap.PlantGrass(count);
-        day++;
-    }
-
-    public int getDay() {
-        return day;
+        animalMap.nextDay();
     }
 
     public MapInfo getMapInfo() {return mapInfo;}

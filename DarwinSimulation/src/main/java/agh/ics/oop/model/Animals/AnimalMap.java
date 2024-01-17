@@ -31,12 +31,21 @@ public class AnimalMap implements MoveValidator {
         if (animals.containsKey(animal.position())) {
             List<Animal> animalsAtPosition = animals.get(animal.position());
             Animal firstAnimal = animalsAtPosition.get(0);
-            if (firstAnimal.energy() <= animal.energy()) animalsAtPosition.add(0, animal);
+            if (firstAnimal.energy() <= animal.energy()) {
+                animalsAtPosition.add(0, animal);
+                return;
+            }
             else if (animalsAtPosition.size() > 1) {
                 Animal secondAnimal = animalsAtPosition.get(1);
-                if (secondAnimal.energy() <= animal.energy()) animalsAtPosition.add(1, animal);
-            } else animalsAtPosition.add(animal);
-        } else animals.computeIfAbsent(animal.position(), k -> new ArrayList<>()).add(animal);
+                if (secondAnimal.energy() <= animal.energy()) {
+                    animalsAtPosition.add(1, animal);
+                    return;
+                }
+            }
+            animalsAtPosition.add(animal);
+        } else{
+            animals.computeIfAbsent(animal.position(), k -> new ArrayList<>()).add(animal);
+        }
     }
 
     public void move(Animal animal) {
@@ -74,9 +83,10 @@ public class AnimalMap implements MoveValidator {
                     parent2.loseEnergy(reproductionEnergy);
                     parent2.addKid();
                     Genotype genotype = parent1.getGenotype();
-                    Animal baby = new Animal(position, new Genotype(newGenes,genotype.getMutationOption(),genotype.getMinimalMutationNumber(),genotype.getMaximalMutationNumber()), 2 * reproductionEnergy);
+                    Animal baby = new Animal(position, new Genotype(newGenes,genotype.getMutationOption(),genotype.getMinimalMutationNumber(),genotype.getMaximalMutationNumber()), 2 * reproductionEnergy, parent1, parent2);
+                    addProgeny(baby,new HashSet<Animal>());
                     baby.getGenotype().mutate();
-                    place(baby);
+                    this.place(baby);
                 }
             }
         }
@@ -97,6 +107,24 @@ public class AnimalMap implements MoveValidator {
         }
         return newGenes;
     }
+
+    public void addProgeny(Animal animal, HashSet<Animal> visited){
+        Animal parent1 = animal.getParent1();
+        Animal parent2 = animal.getParent2();
+        if(parent1 != null && parent2 != null) {
+            if(!visited.contains(parent1)){
+                parent1.addProgeny();
+                visited.add(parent1);
+            }
+            if(!visited.contains(parent2)){
+                parent2.addProgeny();
+                visited.add(parent2);
+            }
+            addProgeny(parent1,visited);
+            addProgeny(parent2,visited);
+        }
+    }
+
 
     @Override
     public Vector2D canMoveHorizontally(Vector2D position) {
@@ -127,9 +155,9 @@ public class AnimalMap implements MoveValidator {
         List<Animal> allAnimals = getAllAnimals();
         for (Animal animal : allAnimals) {
             if (animal.energy() <= 0) {
+                animal.setDeathDay(dayNumber);
                 List<Animal> animalsAtPosition = animals.get(animal.position());
                 animalsAtPosition.remove(animal);
-                animal.setDeathDay(dayNumber);
                 if(changeListener != null)changeListener.addDeadBody(animal.position());
                 if (animalsAtPosition.isEmpty()) animals.remove(animal.position());
             }

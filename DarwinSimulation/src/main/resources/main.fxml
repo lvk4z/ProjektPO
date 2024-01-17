@@ -80,6 +80,10 @@
                             <Text fx:id="kidsNumberText" />
                         </HBox>
                         <HBox>
+                            <Label text="Number of progeny: " />
+                            <Text fx:id="progenyNumberText" />
+                        </HBox>
+                        <HBox>
                             <Label fx:id="statusLabel" text="Days alive: " />
                             <Text fx:id="daysAliveText" />
                         </HBox>
