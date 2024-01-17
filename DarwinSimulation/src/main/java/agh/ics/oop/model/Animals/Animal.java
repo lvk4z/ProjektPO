@@ -55,11 +55,11 @@ public class Animal implements WorldElement {
         if (horizontalValidator == null && verticalValidator) {
             position = position.add(moveVector);
         } else if (horizontalValidator != null && !verticalValidator) {
+            position = new Vector2D(horizontalValidator.getX(),position.getY());
             orientation = orientation.rotate(4);
-            position = new Vector2D(horizontalValidator.getX(), horizontalValidator.getY() - 1);
         } else if (horizontalValidator != null) {
             position = horizontalValidator;
-        } else {
+        } else{
             orientation = orientation.rotate(4);
         }
     }

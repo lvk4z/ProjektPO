@@ -31,12 +31,21 @@ public class AnimalMap implements MoveValidator {
         if (animals.containsKey(animal.position())) {
             List<Animal> animalsAtPosition = animals.get(animal.position());
             Animal firstAnimal = animalsAtPosition.get(0);
-            if (firstAnimal.energy() <= animal.energy()) animalsAtPosition.add(0, animal);
+            if (firstAnimal.energy() <= animal.energy()) {
+                animalsAtPosition.add(0, animal);
+                return;
+            }
             else if (animalsAtPosition.size() > 1) {
                 Animal secondAnimal = animalsAtPosition.get(1);
-                if (secondAnimal.energy() <= animal.energy()) animalsAtPosition.add(1, animal);
-            } else animalsAtPosition.add(animal);
-        } else animals.computeIfAbsent(animal.position(), k -> new ArrayList<>()).add(animal);
+                if (secondAnimal.energy() <= animal.energy()) {
+                    animalsAtPosition.add(1, animal);
+                    return;
+                }
+            }
+            animalsAtPosition.add(animal);
+        } else{
+            animals.computeIfAbsent(animal.position(), k -> new ArrayList<>()).add(animal);
+        }
     }
 
     public void move(Animal animal) {
@@ -75,7 +84,7 @@ public class AnimalMap implements MoveValidator {
                     parent2.addKid();
                     Genotype genotype = parent1.getGenotype();
                     Animal baby = new Animal(position, new Genotype(newGenes,genotype.getMutationOption(),genotype.getMinimalMutationNumber(),genotype.getMaximalMutationNumber()), 2 * reproductionEnergy, parent1, parent2);
-//                    addProgeny(baby);
+                    addProgeny(baby,new HashSet<Animal>());
                     baby.getGenotype().mutate();
                     this.place(baby);
                 }
@@ -99,14 +108,20 @@ public class AnimalMap implements MoveValidator {
         return newGenes;
     }
 
-    public void addProgeny(Animal animal){
+    public void addProgeny(Animal animal, HashSet<Animal> visited){
         Animal parent1 = animal.getParent1();
         Animal parent2 = animal.getParent2();
         if(parent1 != null && parent2 != null) {
-            parent1.addProgeny();
-            parent2.addProgeny();
-            addProgeny(parent1);
-            addProgeny(parent2);
+            if(!visited.contains(parent1)){
+                parent1.addProgeny();
+                visited.add(parent1);
+            }
+            if(!visited.contains(parent2)){
+                parent2.addProgeny();
+                visited.add(parent2);
+            }
+            addProgeny(parent1,visited);
+            addProgeny(parent2,visited);
         }
     }
 
