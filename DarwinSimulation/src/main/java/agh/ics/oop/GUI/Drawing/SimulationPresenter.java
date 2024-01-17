@@ -9,7 +9,6 @@ import agh.ics.oop.model.Plants.EquatorPlantMap;
 import agh.ics.oop.model.Plants.GravePlantMap;
 import agh.ics.oop.model.Plants.PlantMap;
 import agh.ics.oop.Simulation;
-import agh.ics.oop.Stats.ChartDrawer;
 import agh.ics.oop.model.*;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -73,7 +72,6 @@ public class SimulationPresenter implements MapChangeListener, TrackedAnimalList
     @FXML
     private CheckBox highLightCheckBox;
     private Simulation simulation;
-    private ChartDrawer chartDrawer;
     private MapDrawer mapDrawer;
     private Highlighting highlighting;
     private Animal trackedAnimal = null;
@@ -104,31 +102,21 @@ public class SimulationPresenter implements MapChangeListener, TrackedAnimalList
         this.mapDrawer = new MapDrawer(config.getMapWidth(), config.getMapHeight(), this);
         this.highlighting = new Highlighting(this.mapDrawer);
 
-//        chartDrawer = new ChartDrawer();
-//        VBox chartContainer = chartDrawer.getChartContainer();
-//        chartBox.getChildren().add(chartContainer);
     }
 
     @Override
     public void mapChanged(WorldMap worldMap, SimulationStatistics statistics) {
         Platform.runLater(() -> {
             updateStatistics(statistics);
-            mapDrawer.drawMap(mapGrid,worldMap);
-            if(trackedAnimal != null){
+            mapDrawer.drawMap(mapGrid, worldMap);
+            if (trackedAnimal != null) {
                 animalStats();
-            }
-            else vBoxAnimalInformation.setVisible(false);
+            } else vBoxAnimalInformation.setVisible(false);
             preferredGrassPositions = worldMap.getMapInfo().getPreferredGrassPositions();
             dominantGenotype = statistics.getDominantGenotype();
         });
     }
 
-    @Override
-    public void dayPassed(SimulationStatistics statistics) {
-        Platform.runLater(() -> {
-//            chartDrawer.updateChartData(Integer.parseInt(statistics.getCurrentDay()), Integer.parseInt(statistics.getTotalAnimals()), Integer.parseInt(statistics.getTotalPlants()));
-        });
-    }
     @FXML
     public void handleGrassCheckBox() {
         Platform.runLater(() -> {
@@ -139,6 +127,7 @@ public class SimulationPresenter implements MapChangeListener, TrackedAnimalList
             }
         });
     }
+
     @FXML
     public void handleGenotypeCheckBox() {
         if (dominantGenotype == null) return;
@@ -146,12 +135,13 @@ public class SimulationPresenter implements MapChangeListener, TrackedAnimalList
 
         Platform.runLater(() -> {
             if (highLightCheckBox.isSelected()) {
-                highlighting.highlightDominantGenotype(animals,dominantGenotype);
-            }else{
-                highlighting.unHighlightDominantGenotype(animals,dominantGenotype);
+                highlighting.highlightDominantGenotype(animals, dominantGenotype);
+            } else {
+                highlighting.unHighlightDominantGenotype(animals, dominantGenotype);
             }
         });
     }
+
     @FXML
     public void stopSimulation() {
         simulation.stopSimulation();
@@ -179,6 +169,7 @@ public class SimulationPresenter implements MapChangeListener, TrackedAnimalList
         vBoxAnimalInformation.setVisible(true);
         animalStats();
     }
+
     public void updateStatistics(SimulationStatistics statistics) {
         sDay.setText(statistics.getCurrentDay());
         sTotalAnimals.setText(statistics.getTotalAnimals());
@@ -196,11 +187,10 @@ public class SimulationPresenter implements MapChangeListener, TrackedAnimalList
         grassEatenText.setText(String.valueOf(trackedAnimal.getGrassEaten()));
         kidsNumberText.setText(String.valueOf(trackedAnimal.getKidsNumber()));
         progenyNumberText.setText(String.valueOf(trackedAnimal.getProgeny()));
-        if(!trackedAnimal.isStillAlive()){
+        if (!trackedAnimal.isStillAlive()) {
             statusLabel.setText("Died at day: ");
             daysAliveText.setText(String.valueOf(trackedAnimal.getDeathDay()));
-        }
-        else{
+        } else {
             statusLabel.setText("Days alive: ");
             daysAliveText.setText(String.valueOf(trackedAnimal.getLifetime()));
         }

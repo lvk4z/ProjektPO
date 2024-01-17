@@ -22,7 +22,7 @@ public class Highlighting {
         }
     }
 
-    public void unHighlightPreferredGrassPositions(List<Vector2D> preferredPositions){
+    public void unHighlightPreferredGrassPositions(List<Vector2D> preferredPositions) {
         for (Vector2D position : preferredPositions) {
             StackPane cell = mapDrawer.getMapCell(position.getX(), position.getY());
             if (cell != null) {
@@ -31,7 +31,7 @@ public class Highlighting {
         }
     }
 
-    public void highlightDominantGenotype(List<Animal> animals, List<Integer> dominantGenotype){
+    public void highlightDominantGenotype(List<Animal> animals, List<Integer> dominantGenotype) {
         for (Animal animal : animals) {
             if (animal.getGenes().equals(dominantGenotype)) {
                 StackPane cell = mapDrawer.getMapCell(animal.position().getX(), animal.position().getY());
@@ -42,7 +42,7 @@ public class Highlighting {
         }
     }
 
-    public void unHighlightDominantGenotype(List<Animal> animals, List<Integer> dominantGenotype){
+    public void unHighlightDominantGenotype(List<Animal> animals, List<Integer> dominantGenotype) {
         for (Animal animal : animals) {
             if (animal.getGenes().equals(dominantGenotype)) {
                 StackPane cell = mapDrawer.getMapCell(animal.position().getX(), animal.position().getY());

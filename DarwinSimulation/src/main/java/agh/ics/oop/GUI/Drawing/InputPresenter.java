@@ -66,60 +66,50 @@ public class InputPresenter {
     private Map<String, String> getConfigurationDetails() throws ValidationException {
         Map<String, String> configDetails = new HashMap<>();
 
-        int mapWidth = Integer.parseInt(widthTextField.getText());
-        Validator.validateMapSize(mapWidth);
+        Validator.validateMapSize(widthTextField.getText());
         configDetails.put("Map's width", widthTextField.getText());
 
-        int mapHeight = Integer.parseInt(heightTextField.getText());
-        Validator.validateMapSize(mapHeight);
+        Validator.validateMapSize(heightTextField.getText());
         configDetails.put("Map's height", heightTextField.getText());
 
-        int plantsCount = Integer.parseInt(initialPlantsTextField.getText());
-        Validator.validateInitialPlants(plantsCount);
+        Validator.validateInitialPlants(initialPlantsTextField.getText());
         configDetails.put("Initial Number of Plants", initialPlantsTextField.getText());
 
-        int plantsEnergy = Integer.parseInt(plantEnergyTextField.getText());
-        Validator.validateInitialPlants(plantsEnergy);
+        Validator.validateEnergyValue(plantEnergyTextField.getText());
         configDetails.put("Single plant energy", plantEnergyTextField.getText());
 
-        int plantsGrowing = Integer.parseInt(numberOfPlantsGrowingTextField.getText());
-        Validator.validateNumberOfPlantsGrowing(plantsGrowing);
+        Validator.validateNumberOfPlantsGrowing(numberOfPlantsGrowingTextField.getText());
         configDetails.put("Number of plants growing each day", numberOfPlantsGrowingTextField.getText());
 
         configDetails.put("Plant Development Option", corpsesPlantGrowthButton.isSelected() ? "Life-giving corpses" : "Normal");
 
-        int animalsCount = Integer.parseInt(initialAnimalsTextField.getText());
-        Validator.validateInitialAnimals(animalsCount);
+        Validator.validateInitialAnimals(initialAnimalsTextField.getText());
         configDetails.put("Initial Number of Animals", initialAnimalsTextField.getText());
 
-        int animalsEnergy = Integer.parseInt(initialAnimalEnergyTextField.getText());
-        Validator.validateAnimalEnergyValue(animalsEnergy);
+        Validator.validateEnergyValue(initialAnimalEnergyTextField.getText());
         configDetails.put("Initial animals' energy", initialAnimalEnergyTextField.getText());
 
-        int energyToBreed = Integer.parseInt(requiredEnergyToBreedTextField.getText());
-        Validator.validateEnergyToBreed(energyToBreed);
+        Validator.validateEnergyToBreed(requiredEnergyToBreedTextField.getText());
         configDetails.put("Energy to consider the animal as full and ready to breed", requiredEnergyToBreedTextField.getText());
 
-        int energyUsedToReproduction = Integer.parseInt(energyLostToBreedTextField.getText());
-        Validator.validateEnergyUsedForReproduction(energyUsedToReproduction);
+        Validator.validateEnergyUsedForReproduction(energyLostToBreedTextField.getText());
         configDetails.put("Energy used for reproduction", energyLostToBreedTextField.getText());
 
-        int minMutations = Integer.parseInt(minMutationsTextField.getText());
-        int maxMutations = Integer.parseInt(maxMutationsTextField.getText());
-        Validator.validateMutationRange(minMutations, maxMutations);
+
+        Validator.validateMutationRange(minMutationsTextField.getText(), maxMutationsTextField.getText());
         configDetails.put("Min number of mutations", minMutationsTextField.getText());
         configDetails.put("Max number of mutations", maxMutationsTextField.getText());
 
         configDetails.put("Mutation variant", mutationVariantButton.isSelected() ? "Swap" : "Normal");
 
-        int genomeLength = Integer.parseInt(genomeLengthTextField.getText());
-        Validator.validateGenomeLength(genomeLength);
+        Validator.validateGenomeLength(genomeLengthTextField.getText());
         configDetails.put("Genome length", genomeLengthTextField.getText());
 
         configDetails.put("Export", exportCSV.isSelected() ? "Export" : "NotExport");
 
         return configDetails;
     }
+
     @FXML
     private void onSimulationStartClicked() {
         try {
@@ -160,11 +150,50 @@ public class InputPresenter {
             throw new RuntimeException();
         }
     }
+
     private void showAlert(String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Validation Error");
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
+    }
+
+    @FXML
+    private void onTest1Clicked() {
+        widthTextField.setText("10");
+        heightTextField.setText("10");
+        initialPlantsTextField.setText("8");
+        plantEnergyTextField.setText("30");
+        numberOfPlantsGrowingTextField.setText("3");
+        corpsesPlantGrowthButton.setSelected(true);
+        initialAnimalsTextField.setText("12");
+        initialAnimalEnergyTextField.setText("105");
+        requiredEnergyToBreedTextField.setText("40");
+        energyLostToBreedTextField.setText("25");
+        minMutationsTextField.setText("8");
+        maxMutationsTextField.setText("12");
+        genomeLengthTextField.setText("2");
+        mutationVariantButton.setSelected(false);
+        exportCSV.setSelected(false);
+    }
+
+    @FXML
+    private void onTest2Clicked() {
+        widthTextField.setText("50");
+        heightTextField.setText("50");
+        initialPlantsTextField.setText("18");
+        initialAnimalsTextField.setText("15");
+        plantEnergyTextField.setText("50");
+        corpsesPlantGrowthButton.setSelected(false);
+        numberOfPlantsGrowingTextField.setText("9");
+        initialAnimalEnergyTextField.setText("90");
+        requiredEnergyToBreedTextField.setText("12");
+        energyLostToBreedTextField.setText("10");
+        minMutationsTextField.setText("2");
+        maxMutationsTextField.setText("10");
+        genomeLengthTextField.setText("4");
+        mutationVariantButton.setSelected(true);
+        exportCSV.setSelected(true);
     }
 }
